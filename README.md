@@ -209,3 +209,28 @@ This repository is released under the MIT License.
 # Citation
 
 If you use this repository, please cite the associated study.
+
+How to reproduce the analysis
+
+---
+
+# Reproducing the Analysis
+
+To reproduce the empirical analysis:
+
+1. Download the repository
+2. Open the notebook:
+
+notebooks/AICW_NASA_TechPort_Analysis.ipynb
+
+3. Run all cells sequentially
+
+The notebook performs the complete workflow:
+
+- NASA TechPort data processing
+- decision matrix construction
+- criterion weighting
+- ranking models
+- concordance analysis
+- sensitivity analysis
+- figure generation
