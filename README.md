@@ -213,6 +213,19 @@ If you use this repository, please cite the associated study.
 How to reproduce the analysis
 
 ---
+# Environment
+
+The analysis requires Python 3 and the following packages:
+
+pandas  
+numpy  
+matplotlib  
+scikit-learn  
+scipy  
+
+Install them using:
+
+pip install -r requirements.txt
 
 # Reproducing the Analysis
 
