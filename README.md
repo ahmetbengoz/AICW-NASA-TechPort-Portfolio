@@ -1,2 +1,1 @@
-# AICW-NASA-TechPort-Portfolio
-AICW-NASA-TechPort-Portfolio
+This repository contains the data processing pipeline, analytical scripts, and reproducibility materials for the study “Learning Criterion Weights from Technology Maturation Data: AICW and an Empirical Benchmark on NASA TechPort Projects.” The repository includes NASA TechPort project extraction, decision matrix construction, AICW weight estimation, benchmark weighting methods, ranking analyses, concordance analysis, sensitivity analysis, and figure generation.
