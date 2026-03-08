@@ -217,11 +217,11 @@ How to reproduce the analysis
 
 The analysis requires Python 3 and the following packages:
 
-pandas  
-numpy  
-matplotlib  
-scikit-learn  
-scipy  
+- pandas
+- numpy
+- matplotlib
+- scikit-learn
+- scipy  
 
 Install them using:
 
