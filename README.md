@@ -2,8 +2,7 @@
 
 This repository contains the data, analytical scripts, and reproducibility materials for the study:
 
-**Learning Criterion Weights from Technology Maturation Data:  
-AICW and an Empirical Benchmark on NASA TechPort Projects**
+**Learning Criterion Weights from Technology Maturation Data: A Supervised-Learning Framework for MCDM and Technology Portfolio Decision Support**
 
 The repository implements the Artificial Intelligence for Criterion Weighting (AICW) framework and compares it with established multi-criteria decision-making (MCDM) weighting methods using NASA technology development project data.
 
