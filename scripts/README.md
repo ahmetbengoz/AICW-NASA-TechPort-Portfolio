@@ -1,15 +1,20 @@
-# Scripts
+# Analysis script
 
-This directory contains Python scripts corresponding to the analytical workflow implemented in the notebook.
+`run_analysis.py` is the authoritative executable workflow.
 
-The main analysis can be reproduced using the notebook:
+From the repository root:
 
-notebooks/AICW_NASA_TechPort_Analysis.ipynb
+```bash
+python scripts/run_analysis.py
+```
 
-The scripts folder is reserved for modular implementations of:
+Optional paths:
 
-- data extraction
-- decision matrix construction
-- weighting methods
-- ranking models
-- sensitivity analysis
+```bash
+python scripts/run_analysis.py \
+  --raw-data data/raw/techport_projects_batch1.csv \
+  --output-dir outputs \
+  --figure-dir figures
+```
+
+The script uses a fixed seed, recreates all generated CSV and figure files, and writes their SHA-256 hashes to `outputs/run_manifest.json`.

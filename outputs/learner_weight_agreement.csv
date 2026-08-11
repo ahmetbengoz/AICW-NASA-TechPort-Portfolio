@@ -1,0 +1,13 @@
+context,profile_1,profile_2,spearman_rho,kendall_tau,l1_distance
+primary_weights,ElasticNet,RandomForest,0.7714285714285715,0.6,0.3244545924337367
+primary_weights,ElasticNet,ExtraTrees,0.942857142857143,0.8666666666666666,0.34647846878981464
+primary_weights,ElasticNet,HistGradientBoosting,0.6,0.4666666666666666,0.430501016687378
+primary_weights,RandomForest,ExtraTrees,0.8857142857142858,0.7333333333333333,0.08307639502378818
+primary_weights,RandomForest,HistGradientBoosting,0.942857142857143,0.8666666666666666,0.12044767731224243
+primary_weights,ExtraTrees,HistGradientBoosting,0.7714285714285715,0.6,0.1734896184838806
+secondary_weights,ElasticNet,RandomForest,0.05797710356524484,0.13801311186847084,0.8204462000659328
+secondary_weights,ElasticNet,ExtraTrees,0.05797710356524484,0.13801311186847084,0.8485656380436974
+secondary_weights,ElasticNet,HistGradientBoosting,0.14494275891311212,0.0,0.9928854532698049
+secondary_weights,RandomForest,ExtraTrees,1.0,0.9999999999999999,0.07915007633393228
+secondary_weights,RandomForest,HistGradientBoosting,0.7714285714285715,0.6,0.2821142286067981
+secondary_weights,ExtraTrees,HistGradientBoosting,0.7714285714285715,0.6,0.2973365438816745

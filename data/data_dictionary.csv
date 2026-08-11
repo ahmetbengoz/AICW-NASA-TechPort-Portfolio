@@ -1,0 +1,18 @@
+field,reader_label,source_or_derivation,timing_class,analytical_role,direction_in_illustrative_mcdm,notes
+projectId,Project identifier,NASA TechPort,identifier,join key,not applicable,Public TechPort project identifier
+title,Project title,NASA TechPort,current snapshot,descriptive only,not applicable,Not used as a predictor
+startDate,Start date,NASA TechPort,plausibly baseline available,derive planned duration,not applicable,Snapshot does not prove the date was never revised
+endDate,End date,NASA TechPort,plausibly baseline available,derive planned duration,not applicable,Snapshot does not distinguish original plan from later revision
+status,Project status,NASA TechPort,current state,primary sample restriction,not applicable,Primary analysis retains completed projects
+trlBegin,Initial TRL,NASA TechPort,plausibly baseline available,predictor,benefit,Initial technology readiness level
+trlCurrent,Current TRL,NASA TechPort,current state,outcome derivation only,not used,Excluded from the leakage-aware predictor set
+trlEnd,Target TRL,NASA TechPort,plausibly baseline available,derive planned TRL gain,not applicable,Interpreted as target rather than realised end state
+primaryTxCode,Primary taxonomy code,NASA TechPort,plausibly baseline available,derive rarity,not applicable,Used to calculate inverse portfolio frequency
+primaryTxLevel,Taxonomy level,NASA TechPort,plausibly baseline available,predictor,benefit,Higher-is-better treatment is an illustrative normative assumption
+otherOrgCount,Other-organisation count,NASA TechPort,plausibly baseline available,predictor,benefit,Number recorded in the frozen snapshot
+programTitle,Programme title,NASA TechPort,plausibly baseline available,grouped diagnostic,not applicable,Used to separate programmes in a robustness split
+planned_duration_months,Planned duration,(endDate-startDate)/30.4375,plausibly baseline available,predictor,cost,Calendar-month approximation
+planned_trl_gain,Planned TRL gain,trlEnd-trlBegin,plausibly baseline available,predictor,benefit,Also defines the denominator of the secondary outcome
+realized_trl_progress,Realised TRL progress,trlCurrent-trlBegin,current-state outcome,primary outcome,not applicable,Retrospective association not a causal outcome
+trl_goal_attainment,TRL goal attainment,realized_trl_progress/planned_trl_gain,current-state outcome,secondary outcome,not applicable,Defined only for positive planned TRL gain and clipped to zero-one
+taxonomy_rarity,Taxonomy rarity,one divided by frozen-portfolio code frequency,portfolio-context predictor,predictor,benefit,Higher-is-better treatment is an illustrative normative assumption

@@ -1,0 +1,11 @@
+Figure 1. Leakage-aware learning and MCDM propagation workflow. Predictive reliance, value direction and final ranking are treated as separate analytical layers.
+
+Figure 2. Repeated out-of-fold predictive performance by outcome and learner. Points show mean R-squared; bars show 95% t intervals over five complete out-of-fold repetitions.
+
+Figure 3. Primary-outcome proxy-importance profiles derived from held-out permutation importance. Bars show means across 25 outer folds; error bars show empirical 2.5th and 97.5th percentiles.
+
+Figure 4. Pairwise learner agreement in primary proxy-weight order and downstream WASPAS project ranks. Ranking agreement remains high despite visible differences among weak-feature weights.
+
+Figure 5. Random-Forest leakage diagnostic for raw TRL progress. Bars show mean repeated out-of-fold R-squared; points show individual repetitions.
+
+Figure 6. Rank stability under 5,000 independent bounded weight perturbations around the primary cross-learner median profile.

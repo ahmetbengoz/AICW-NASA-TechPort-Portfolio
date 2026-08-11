@@ -1,134 +1,35 @@
-# Methodological Notes
+# Methodological notes
 
-## Data Source
+## Interpretation
 
-All project data used in this study were obtained from the publicly available **NASA TechPort API**.
+The revised workflow estimates outcome-conditioned predictive-reliance profiles. A normalised held-out permutation profile is called a proxy weight because it can be propagated through an MCDM calculation, not because it is equivalent to a stakeholder preference, marginal utility, causal effect or universal criterion weight.
 
-NASA TechPort is a project management database containing detailed information on NASA technology development projects, including technology readiness levels, project timelines, organizational participation, and technology taxonomy classifications.
+## Samples and outcomes
 
-The data extraction process used the official API endpoint:
+The frozen dataset contains 299 released records. The primary sample contains 201 completed projects with complete TRL, date, taxonomy and organisation fields. The primary outcome is current TRL minus initial TRL. The secondary sample contains 196 projects with positive planned TRL gain; its outcome is realised progress divided by planned gain and clipped to the zero-one interval.
 
-https://techport.nasa.gov/api/projects/
+The legacy current-state specification is retained only as a leakage diagnostic. The revised ex-ante-oriented predictor set excludes both current TRL and remaining TRL gap because the latter is also a function of current TRL.
 
-Project-level JSON records were retrieved and parsed to construct the empirical dataset.
+## Learners and validation
 
----
+Elastic Net, Random Forest, Extra Trees and histogram gradient boosting are evaluated on identical five-times-repeated five-fold partitions. Elastic Net hyperparameters are selected within each outer training fold. A mean-prediction model provides a performance floor but does not generate a proxy weight.
 
-## Sample Construction
+For each outer fold, predictive performance is recorded as R-squared, MAE and RMSE. Complete out-of-fold predictions are assembled for each repeat, so the reported repeat-level metrics refer to all observations rather than averages of unstable small-fold R-squared values. Paired Wilcoxon tests use the five repeat-level results and Holm adjustment; they are treated as descriptive because of the small number of repeats.
 
-The initial dataset consisted of all projects retrieved through the API query process.
+## Held-out permutation profiles
 
-A **complete-case filtering strategy** was applied to ensure that all projects included in the final analysis contained valid values for the required decision criteria.
+Permutation importance is computed on the outer test fold using the increase in MAE after a feature is permuted. Each fold uses ten permutations. Negative sampling estimates are set to zero. The remaining magnitudes are divided by their sum. If all magnitudes are non-positive, an equal profile is used and the event is flagged. The released output reports raw importance, clipping frequency, normalised fold profiles, means, standard deviations and percentile intervals.
 
-Projects with missing values in the following fields were excluded:
+## MCDM propagation
 
-- TRL current
-- TRL begin
-- project duration
-- taxonomy classification
-- organizational participation
+Predictive importance supplies magnitude only. Separate illustrative directions treat initial TRL, planned TRL gain, taxonomy level, taxonomy rarity and other-organisation count as benefits and planned duration as a cost. These directions are modelling assumptions, not learned facts or NASA policy.
 
-After filtering, the final empirical sample consisted of the projects included in the decision matrix.
+WASPAS uses an equal mixture of weighted sum and weighted product terms after ratio normalisation. MARCOS uses ideal and anti-ideal utility degrees and the standard utility function. Conventional comparisons include equal weights, standard-deviation weights, MEREC and a fully solved FUCOM profile based on declared synthetic priority ratios. The FUCOM profile is not presented as stakeholder elicitation.
 
----
+## Robustness
 
-## Decision Criteria
+Robustness outputs cover learner-specific profile agreement, learner-specific ranking agreement, outcome-specific profile and ranking agreement, WASPAS-MARCOS agreement, programme-separated validation, chronological transport and 5,000 independent perturbations. Each perturbation multiplies every element of the cross-learner median profile by a uniform factor in [0.8, 1.2] before renormalisation.
 
-Six decision criteria were constructed for the technology portfolio evaluation.
+## Reproducibility boundary
 
-1. **TRL current**  
-   Current technology readiness level of the project.
-
-2. **Duration (months)**  
-   Project duration calculated from project start and end dates.
-
-3. **TRL gap**  
-   Difference between expected final TRL and current TRL.
-
-4. **Primary taxonomy level**  
-   Depth of the technology classification within the NASA technology taxonomy.
-
-5. **Taxonomy rarity**  
-   Inverse frequency of the technology taxonomy code in the dataset.
-
-6. **Organizational participation**  
-   Number of participating organizations involved in the project.
-
-These criteria capture multiple dimensions of technology development including maturity, advancement potential, structural novelty, and collaboration intensity.
-
----
-
-## AICW Target Definition
-
-The Artificial Intelligence for Criterion Weighting (AICW) framework learns criterion importance from **observed technology maturation outcomes**.
-
-The learning target is defined as:
-
-TRL progress = TRL_current − TRL_begin
-
-This variable measures realized technology advancement during the project lifecycle and serves as the prediction target for the machine learning model.
-
----
-
-## Weighting Methods
-
-Five weighting approaches were evaluated:
-
-- AICW (Artificial Intelligence for Criterion Weighting)
-- FUCOM
-- LBWA
-- MEREC
-- Standard Deviation weighting
-
-FUCOM and LBWA were implemented as **structured benchmark parameterizations**, rather than expert-elicited judgments, to allow consistent comparison with the data-driven AICW approach.
-
----
-
-## Ranking Models
-
-Two ranking models were used to evaluate project prioritization:
-
-- **WASPAS** (Weighted Aggregated Sum Product Assessment)
-- **MARCOS** (Measurement Alternatives and Ranking according to Compromise Solution)
-
-Using two aggregation models allows evaluation of ranking robustness across different decision aggregation logics.
-
----
-
-## Concordance Analysis
-
-Ranking agreement between weighting methods was evaluated using:
-
-- Kendall's tau rank correlation coefficient
-- Spearman's rho correlation coefficient
-
-In addition, overlap between the **top-10 ranked projects** across weighting methods was analyzed.
-
----
-
-## Sensitivity Analysis
-
-Sensitivity analysis was performed to evaluate the robustness of AICW rankings.
-
-A **one-at-a-time perturbation approach** was applied where each criterion weight was increased by **10%**, while the remaining weights were proportionally normalized.
-
-The resulting ranking changes were measured using:
-
-- mean rank shift
-- maximum rank shift
-
----
-
-## Reproducibility
-
-All steps required to reproduce the empirical analysis are provided in this repository, including:
-
-- data extraction scripts
-- decision matrix construction
-- weighting method implementations
-- ranking algorithms
-- concordance analysis
-- sensitivity analysis
-- figure generation
-
-The full analytical workflow is documented in the accompanying Jupyter/Colab notebook.
+TechPort records are current snapshots. The repository does not contain historical field versions proving that the date, target and organisation variables were unchanged after project start. For this reason, the analysis is explicitly retrospective. It demonstrates a transparent audit and benchmarking protocol, not a validated prospective NASA selection system.

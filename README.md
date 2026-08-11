@@ -1,248 +1,66 @@
-# AICW-NASA-TechPort-Portfolio
+# Learning outcome-conditioned criterion importance for technology portfolio screening
 
-This repository contains the data, analytical scripts, and reproducibility materials for the study:
+This repository is the reproducibility package for a retrospective NASA TechPort study of supervised-learning-derived proxy-importance weights and their propagation through multi-criteria decision-making (MCDM) rankings.
 
-**Learning Criterion Weights from Technology Maturation Data: A Supervised-Learning Framework for MCDM and Technology Portfolio Decision Support**
+The revised study does **not** present Random Forest impurity importance as a new artificial-intelligence algorithm, a preference weight, or a causal effect. It compares Elastic Net, Random Forest, Extra Trees and histogram gradient boosting under identical repeated cross-validation splits; derives non-negative unit-sum profiles from held-out permutation importance; and tests sensitivity to learner choice, outcome definition, aggregation method and bounded weight perturbations.
 
-The repository implements the Artificial Intelligence for Criterion Weighting (AICW) framework and compares it with established multi-criteria decision-making (MCDM) weighting methods using NASA technology development project data.
+## Main empirical design
 
----
+- Frozen source snapshot: 299 released NASA TechPort project records.
+- Primary sample: 201 completed projects with complete baseline and outcome fields.
+- Primary outcome: realised TRL progress (`current TRL - initial TRL`).
+- Secondary outcome: realised progress divided by planned TRL gain for the 196 projects with positive planned gain.
+- Plausibly baseline-available predictors: initial TRL, planned duration, planned TRL gain, taxonomy level, portfolio taxonomy rarity and number of other organisations.
+- Learners: Elastic Net, Random Forest, Extra Trees and histogram gradient boosting; mean prediction is retained as a performance-only baseline.
+- Validation: five repeats of five-fold cross-validation, plus programme-grouped and chronological transport diagnostics.
+- Importance: permutation importance on each held-out outer fold, clipped at zero and normalised only after out-of-sample evaluation.
+- Downstream ranking: corrected WASPAS and MARCOS implementations.
+- Robustness: learner and outcome agreement, conventional profiles, cross-method agreement and 5,000 bounded +/-20% weight perturbations.
 
-# Data Source
+## Reproduce the complete analysis
 
-All project data were obtained from the publicly available **NASA TechPort API**.
+```bash
+python -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+python -m pip install -r requirements.txt
+python scripts/run_analysis.py
+```
 
-NASA TechPort provides detailed information on NASA technology development projects, including:
+The command rewrites every analytical CSV in `outputs/`, every publication figure in `figures/`, and `outputs/run_manifest.json`, which records seeds, software versions and SHA-256 hashes.
 
-- technology readiness levels (TRL)
-- project timelines
-- technology taxonomy classifications
-- participating organizations
+## Repository structure
 
-API endpoint used:
+```text
+data/raw/                         frozen TechPort snapshot and clean API URL index
+data/data_dictionary.csv          field definitions, timing and analytical roles
+scripts/run_analysis.py           single-command deterministic pipeline
+notebooks/                        notebook entry point for interactive reproduction
+outputs/                          generated samples, models, weights, rankings and diagnostics
+figures/                          generated 600-dpi PNG and editable SVG figures
+manuscript/supplementary/         methodological documentation
+REPRODUCIBILITY.md                audit trail and verification instructions
+ZENODO_RELEASE.md                 versioned archival-release procedure
+```
 
-https://techport.nasa.gov/api/projects/
+Running the pipeline creates `outputs/full_results.zip`, which contains the complete
+generated CSV set, including the two large deterministic draw/ranking files excluded
+as loose files from version control. It also regenerates the high-resolution PNG
+figures; the scalable SVG counterparts and all expected hashes remain versioned.
 
----
+## Important interpretation boundary
 
-# Repository Structure
-# AICW-NASA-TechPort-Portfolio
+Held-out permutation importance measures the predictive reliance of a fitted learner under a specified outcome and data distribution. It does not by itself identify stakeholder preferences, benefit/cost direction, causal importance or a universally transferable weighting rule. The MCDM directions in this repository are declared modelling assumptions used to demonstrate downstream propagation.
 
-This repository contains the data, analytical scripts, and reproducibility materials for the study:
+## Data source and licence
 
-**Learning Criterion Weights from Technology Maturation Data:  
-AICW and an Empirical Benchmark on NASA TechPort Projects**
+The frozen snapshot was derived from the public [NASA TechPort API](https://techport.nasa.gov/help/api). Repository code is released under the MIT License. NASA source records remain subject to the terms of the source platform.
 
-The repository implements the Artificial Intelligence for Criterion Weighting (AICW) framework and compares it with established multi-criteria decision-making (MCDM) weighting methods using NASA technology development project data.
+## Archived versions
 
----
+- Legacy v1.0 archive: [Zenodo 10.5281/zenodo.18913422](https://doi.org/10.5281/zenodo.18913422).
+- The v1.0 archive documents the superseded single-Random-Forest analysis and must not be used to reproduce the revised manuscript.
+- The next GitHub release will create a new versioned Zenodo record while preserving the v1.0 record.
 
-# Data Source
+## Citation
 
-All project data were obtained from the publicly available **NASA TechPort API**.
-
-NASA TechPort provides detailed information on NASA technology development projects, including:
-
-- technology readiness levels (TRL)
-- project timelines
-- technology taxonomy classifications
-- participating organizations
-
-API endpoint used:
-
-https://techport.nasa.gov/api/projects/
-
----
-
-# Repository Structure
-data/
-raw/ → raw TechPort project data
-processed/ → decision matrix and analysis outputs
-
-scripts/
-→ Python scripts for data processing and analysis
-
-figures/
-→ figures used in the manuscript
-
-notebooks/
-→ full reproducible analysis notebook
-
-manuscript/
-supplementary/ → methodological documentation
-
-
----
-
-# Decision Criteria
-
-The empirical analysis uses six evaluation criteria:
-
-1. TRL current  
-2. Project duration (months)  
-3. TRL gap  
-4. Primary taxonomy level  
-5. Taxonomy rarity  
-6. Organizational participation
-
-These criteria capture technology maturity, advancement potential, structural novelty, and collaboration intensity.
-
----
-
-# Weighting Methods
-
-The study evaluates five weighting approaches:
-
-- **AICW** – Artificial Intelligence for Criterion Weighting
-- **FUCOM**
-- **LBWA**
-- **MEREC**
-- **Standard Deviation weighting**
-
-AICW derives criterion importance using machine learning based on observed technology maturation outcomes.
-
----
-
-# Ranking Models
-
-Two multi-criteria ranking models are used:
-
-- WASPAS
-- MARCOS
-
-These models evaluate technology portfolio prioritization under different aggregation structures.
-
----
-
-# Robustness Analysis
-
-The study evaluates ranking robustness using:
-
-- Kendall's tau correlation
-- Spearman correlation
-- Top-10 project overlap
-- Sensitivity analysis (+10% weight perturbation)
-
----
-
-# Reproducibility
-
-The complete analytical workflow is provided in the notebook:
-
-
----
-
-# Decision Criteria
-
-The empirical analysis uses six evaluation criteria:
-
-1. TRL current  
-2. Project duration (months)  
-3. TRL gap  
-4. Primary taxonomy level  
-5. Taxonomy rarity  
-6. Organizational participation
-
-These criteria capture technology maturity, advancement potential, structural novelty, and collaboration intensity.
-
----
-
-# Weighting Methods
-
-The study evaluates five weighting approaches:
-
-- **AICW** – Artificial Intelligence for Criterion Weighting
-- **FUCOM**
-- **LBWA**
-- **MEREC**
-- **Standard Deviation weighting**
-
-AICW derives criterion importance using machine learning based on observed technology maturation outcomes.
-
----
-
-# Ranking Models
-
-Two multi-criteria ranking models are used:
-
-- WASPAS
-- MARCOS
-
-These models evaluate technology portfolio prioritization under different aggregation structures.
-
----
-
-# Robustness Analysis
-
-The study evaluates ranking robustness using:
-
-- Kendall's tau correlation
-- Spearman correlation
-- Top-10 project overlap
-- Sensitivity analysis (+10% weight perturbation)
-
----
-
-# Reproducibility
-
-The complete analytical workflow is provided in the notebook:
-
-
-Running this notebook reproduces:
-
-- decision matrix construction
-- criterion weighting
-- ranking models
-- concordance analysis
-- sensitivity analysis
-- manuscript figures
-
----
-
-# License
-
-This repository is released under the MIT License.
-
----
-
-# Citation
-
-If you use this repository, please cite the associated study.
-
-How to reproduce the analysis
-
----
-# Environment
-
-The analysis requires Python 3 and the following packages:
-
-- pandas
-- numpy
-- matplotlib
-- scikit-learn
-- scipy  
-
-Install them using:
-
-pip install -r requirements.txt
-
-# Reproducing the Analysis
-
-To reproduce the empirical analysis:
-
-1. Download the repository
-2. Open the notebook:
-
-notebooks/AICW_NASA_TechPort_Analysis.ipynb
-
-3. Run all cells sequentially
-
-The notebook performs the complete workflow:
-
-- NASA TechPort data processing
-- decision matrix construction
-- criterion weighting
-- ranking models
-- concordance analysis
-- sensitivity analysis
-- figure generation
+Use the metadata in `CITATION.cff`. Replace the provisional manuscript fields with the final journal citation after publication.
