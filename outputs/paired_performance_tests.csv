@@ -1,0 +1,10 @@
+metric,reference_learner,comparator,mean_paired_difference_reference_minus_comparator,wilcoxon_statistic,p_value,holm_adjusted_p
+mae,ExtraTrees,ElasticNet,-0.06179269018556076,0.0,0.0625,0.5625
+mae,ExtraTrees,RandomForest,-0.02348277516050703,0.0,0.0625,0.5625
+mae,ExtraTrees,HistGradientBoosting,-0.02193395010754373,2.0,0.1875,0.625
+rmse,ExtraTrees,ElasticNet,0.020098942370241103,0.0,0.0625,0.5625
+rmse,ExtraTrees,RandomForest,0.002881431057524031,6.0,0.8125,1.0
+rmse,ExtraTrees,HistGradientBoosting,0.020228360073968398,1.0,0.125,0.625
+r2,ExtraTrees,ElasticNet,-0.023425974741505005,0.0,0.0625,0.5625
+r2,ExtraTrees,RandomForest,-0.003334096670886222,6.0,0.8125,1.0
+r2,ExtraTrees,HistGradientBoosting,-0.02349623214791068,1.0,0.125,0.625

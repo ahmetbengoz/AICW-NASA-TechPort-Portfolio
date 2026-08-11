@@ -1,0 +1,13 @@
+outcome_specification,feature,feature_label,spearman_rho,p_value_unadjusted
+primary_progress,initial_trl,Initial TRL,-0.07670479837393107,0.27912315831061035
+primary_progress,planned_duration_months,Planned duration,0.07276355418609044,0.30464231607256625
+primary_progress,planned_trl_gain,Planned TRL gain,0.7336301542628337,3.1375197002010614e-35
+primary_progress,taxonomy_level,Taxonomy level,0.1311951925507013,0.06339021589433892
+primary_progress,taxonomy_rarity,Taxonomy rarity,-0.014055939680831095,0.8430104238676952
+primary_progress,other_organization_count,Other organizations,-0.1991338879262295,0.004596332017648171
+secondary_goal_attainment,initial_trl,Initial TRL,0.09177997626041298,0.20075519394408803
+secondary_goal_attainment,planned_duration_months,Planned duration,-0.04669134442367552,0.5157876853298283
+secondary_goal_attainment,planned_trl_gain,Planned TRL gain,-0.04327850357108039,0.5469705931646672
+secondary_goal_attainment,taxonomy_level,Taxonomy level,0.32803550055295067,2.683671960551222e-06
+secondary_goal_attainment,taxonomy_rarity,Taxonomy rarity,-0.019647768718520715,0.7845951621770196
+secondary_goal_attainment,other_organization_count,Other organizations,-0.16708197874859637,0.0192495073246757
