@@ -22,7 +22,7 @@ import numpy as np
 import pandas as pd
 import scipy
 import sklearn
-from PIL import Image, ImageFile
+from PIL import Image
 from scipy.optimize import linprog
 from scipy.stats import kendalltau, spearmanr, t, wilcoxon
 from sklearn.base import clone
@@ -33,11 +33,12 @@ from sklearn.ensemble import (
     RandomForestRegressor,
 )
 from sklearn.inspection import permutation_importance
-from sklearn.linear_model import ElasticNetCV
+from sklearn.linear_model import ElasticNet
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.model_selection import GroupKFold, RepeatedKFold
+from sklearn.model_selection import GridSearchCV, GroupKFold, RepeatedKFold
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
+from figure_io import save_png_atomic
 
 
 SEED = 20260811
@@ -162,20 +163,24 @@ def prepare_data(path: Path) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
 
 
 def make_models(seed: int) -> dict[str, object]:
-    elastic = Pipeline(
+    elastic_pipeline = Pipeline(
         [
             ("scale", StandardScaler()),
             (
                 "model",
-                ElasticNetCV(
-                    l1_ratio=[0.1, 0.5, 0.9, 1.0],
-                    alphas=np.logspace(-4, 1, 60),
-                    cv=5,
+                ElasticNet(
                     max_iter=50000,
                     random_state=seed,
                 ),
             ),
         ]
+    )
+    # Fit the scaler inside each inner split, not before tuning.
+    elastic = GridSearchCV(
+        elastic_pipeline,
+        {"model__alpha": np.logspace(-4, 1, 60),
+         "model__l1_ratio": [0.1, 0.5, 0.9, 1.0]},
+        scoring="neg_mean_squared_error", cv=5, n_jobs=1,
     )
     return {
         "DummyMean": DummyRegressor(strategy="mean"),
@@ -848,6 +853,7 @@ def save_figures(
             "axes.labelsize": 10,
             "legend.fontsize": 9,
             "figure.dpi": 150,
+            "svg.hashsalt": "aicw-v3",
         }
     )
     colors = ["#0072B2", "#E69F00", "#009E73", "#CC79A7"]
@@ -886,8 +892,8 @@ def save_figures(
                 arrowprops={"arrowstyle": "->", "color": "#365F91", "lw": 1.4},
             )
     fig.tight_layout()
-    fig.savefig(figure_dir / "Figure1_workflow.png", dpi=600, bbox_inches="tight")
-    fig.savefig(figure_dir / "Figure1_workflow.svg", bbox_inches="tight")
+    save_png_atomic(fig, figure_dir / "Figure1_workflow.png", bbox_inches="tight")
+    fig.savefig(figure_dir / "Figure1_workflow.svg", bbox_inches="tight", metadata={"Date": None})
     plt.close(fig)
 
     primary_performance = performance_summary.loc[
@@ -912,8 +918,8 @@ def save_figures(
         axis.set_title(title)
         axis.grid(axis="y", alpha=0.25)
     fig.tight_layout()
-    fig.savefig(figure_dir / "Figure2_predictive_performance.png", dpi=600, bbox_inches="tight")
-    fig.savefig(figure_dir / "Figure2_predictive_performance.svg", bbox_inches="tight")
+    save_png_atomic(fig, figure_dir / "Figure2_predictive_performance.png", bbox_inches="tight")
+    fig.savefig(figure_dir / "Figure2_predictive_performance.svg", bbox_inches="tight", metadata={"Date": None})
     plt.close(fig)
 
     primary_importance = importance_summary.loc[
@@ -939,8 +945,8 @@ def save_figures(
     ax.legend(ncol=2, frameon=False)
     ax.grid(axis="y", alpha=0.25)
     fig.tight_layout()
-    fig.savefig(figure_dir / "Figure3_proxy_weights.png", dpi=600, bbox_inches="tight")
-    fig.savefig(figure_dir / "Figure3_proxy_weights.svg", bbox_inches="tight")
+    save_png_atomic(fig, figure_dir / "Figure3_proxy_weights.png", bbox_inches="tight")
+    fig.savefig(figure_dir / "Figure3_proxy_weights.svg", bbox_inches="tight", metadata={"Date": None})
     plt.close(fig)
 
     weight_pivot = pd.DataFrame(np.eye(len(LEARNER_ORDER)), index=LEARNER_ORDER, columns=LEARNER_ORDER)
@@ -972,8 +978,8 @@ def save_figures(
             for column in range(len(LEARNER_ORDER)):
                 axis.text(column, row, f"{matrix.iloc[row, column]:.2f}", ha="center", va="center", fontsize=9)
     fig.colorbar(image, ax=axes.ravel().tolist(), shrink=0.82, label="Spearman correlation")
-    fig.savefig(figure_dir / "Figure4_learner_agreement.png", dpi=600, bbox_inches="tight")
-    fig.savefig(figure_dir / "Figure4_learner_agreement.svg", bbox_inches="tight")
+    save_png_atomic(fig, figure_dir / "Figure4_learner_agreement.png", bbox_inches="tight")
+    fig.savefig(figure_dir / "Figure4_learner_agreement.svg", bbox_inches="tight", metadata={"Date": None})
     plt.close(fig)
 
     leakage_summary = leakage.groupby("specification")[["r2", "mae"]].agg(["mean", "std"])
@@ -992,8 +998,8 @@ def save_figures(
         axis.set_title(title)
         axis.grid(axis="y", alpha=0.25)
     fig.tight_layout()
-    fig.savefig(figure_dir / "Figure5_leakage_diagnostic.png", dpi=600, bbox_inches="tight")
-    fig.savefig(figure_dir / "Figure5_leakage_diagnostic.svg", bbox_inches="tight")
+    save_png_atomic(fig, figure_dir / "Figure5_leakage_diagnostic.png", bbox_inches="tight")
+    fig.savefig(figure_dir / "Figure5_leakage_diagnostic.svg", bbox_inches="tight", metadata={"Date": None})
     plt.close(fig)
 
     fig, axes = plt.subplots(1, 2, figsize=(9.8, 4.1))
@@ -1006,24 +1012,21 @@ def save_figures(
         axis.grid(axis="y", alpha=0.2)
     fig.suptitle("Bounded ±20% weight-perturbation robustness", y=1.02)
     fig.tight_layout()
-    fig.savefig(figure_dir / "Figure6_weight_perturbation.png", dpi=600, bbox_inches="tight")
-    fig.savefig(figure_dir / "Figure6_weight_perturbation.svg", bbox_inches="tight")
+    save_png_atomic(fig, figure_dir / "Figure6_weight_perturbation.png", bbox_inches="tight")
+    fig.savefig(figure_dir / "Figure6_weight_perturbation.svg", bbox_inches="tight", metadata={"Date": None})
     plt.close(fig)
 
-    # Re-encode every PNG through Pillow.  This strips backend-specific chunks,
-    # preserves 600-dpi metadata and guarantees that each PNG has a complete
-    # end marker before hashes or Word files are generated.
-    ImageFile.LOAD_TRUNCATED_IMAGES = True
+    # Atomic exports already produced opaque RGB PNGs. Validate without
+    # reopening the output path for writing or accepting partial images.
     for stem in PUBLICATION_FIGURE_STEMS:
         path = figure_dir / f"{stem}.png"
+        # Never accept a truncated PNG and silently pad the missing rows.
+        with Image.open(path) as check:
+            check.verify()
         with Image.open(path) as source:
             source.load()
-            image = source.copy()
-        temporary = path.with_suffix(".verified.png")
-        image.save(temporary, format="PNG", dpi=(600, 600))
-        temporary.replace(path)
-        with Image.open(path) as verified:
-            verified.verify()
+            if source.mode != "RGB":
+                raise RuntimeError(f"Non-opaque publication export: {path}")
 
 
 def main() -> None:
@@ -1203,6 +1206,8 @@ def main() -> None:
         leakage,
         monte_carlo,
     )
+    from render_revision_workflow import render as render_revision_workflow
+    render_revision_workflow(args.figure_dir)
 
     manifest = {
         "analysis_seed": SEED,

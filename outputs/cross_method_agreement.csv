@@ -1,6 +1,6 @@
 outcome_specification,weight_profile,spearman_rho,kendall_tau,top10_overlap
 primary_progress,CrossLearnerMedian,0.9965139622535556,0.9665655007711825,10
-primary_progress,ElasticNet,0.9992359976621823,0.9876610776655556,9
+primary_progress,ElasticNet,0.9992330421405661,0.9877605851037363,9
 primary_progress,Equal,0.9408214157739538,0.8157050108564283,7
 primary_progress,ExtraTrees,0.9968701026083218,0.9678590974675356,9
 primary_progress,HistGradientBoosting,0.9939618693378671,0.9496492362804119,9
@@ -8,8 +8,8 @@ primary_progress,MEREC,0.9960676784894921,0.9573113090203491,9
 primary_progress,RandomForest,0.995769170806244,0.9636797850639335,10
 primary_progress,StandardDeviation,0.9545204333681347,0.851733917110304,9
 primary_progress,Synthetic_FUCOM,0.9413225515904771,0.8175033583760385,8
-secondary_goal_attainment,CrossLearnerMedian,0.9780665859689583,0.9074781516562874,7
-secondary_goal_attainment,ElasticNet,0.9706890410227519,0.8766026479669264,7
+secondary_goal_attainment,CrossLearnerMedian,0.9780235542745215,0.9074781516562874,7
+secondary_goal_attainment,ElasticNet,0.9715209871151951,0.8729394526139514,8
 secondary_goal_attainment,Equal,0.9613430712786688,0.8386066865237839,7
 secondary_goal_attainment,ExtraTrees,0.9794531627896971,0.9143858914647547,9
 secondary_goal_attainment,HistGradientBoosting,0.978657873325848,0.9020356899890103,8

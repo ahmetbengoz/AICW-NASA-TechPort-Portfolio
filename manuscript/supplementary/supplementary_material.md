@@ -1,5 +1,10 @@
 # Supplementary material
 
+> Descriptive-component provenance note. This file retains v2 tables and markers
+> for traceability; it is not the complete v3 journal supplement. Use
+> `validation_extension.md`, the current article and regenerated v3 outputs.
+> The submitted v3 Word supplement includes the nested and falsification results.
+
 ## Learning outcome-conditioned criterion importance for technology portfolio screening
 
 This supplement reports the audit details, complete secondary results and implementation checks supporting the blinded main manuscript. It contains no author-identifying information.

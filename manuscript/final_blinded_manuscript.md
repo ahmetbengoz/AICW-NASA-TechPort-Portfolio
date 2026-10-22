@@ -1,321 +1,339 @@
-# Learning outcome-conditioned criterion importance for technology portfolio screening
+# Auditing learned criterion weights in technology portfolio screening
 
 ## Abstract
 
-Criterion weights learned from historical outcomes can appear empirical while remaining sensitive to leakage, learner choice and outcome construction. This study develops a leakage-aware protocol for converting held-out permutation importance into non-negative proxy-weight profiles and tracing them through multi-criteria rankings. A frozen NASA TechPort snapshot yields 201 completed projects. Elastic Net, Random Forest, Extra Trees and histogram gradient boosting are compared using five-times-repeated five-fold cross-validation. Raw technology-readiness progress is predicted moderately well (mean R-squared 0.553-0.577), but planned readiness gain receives 0.746-0.961 of the learned weight. Under target-normalised attainment, nonlinear R-squared falls to 0.185-0.231 and outcome-to-outcome weight agreement is weak. Corresponding project rankings also change materially, whereas rankings are stable under bounded perturbations within a fixed outcome. The findings show that supervised importance can support transparent MCDM benchmarking, but cannot be interpreted as preference, causal importance or a stable decision rule without explicit outcome and timing audits.
+Learning criterion weights from historical outcomes does not establish that the resulting scores improve project screening. This study audits that inference using a frozen NASA TechPort batch containing 201 completed projects. Four learners are compared under repeated cross-validation, and permutation importance is propagated through two aggregation models. A nested evaluation then learns weights exclusively within training projects and evaluates shortlists on untouched projects, alongside equal, entropy, CRITIC, MEREC, dispersion, single-criterion and direct-prediction comparators. A planned-gain-only linear model achieves R² of 0.576 for raw readiness progress, compared with 0.543 for the six-feature Random Forest under training-only preprocessing. In random test cohorts, selecting the top fifth by planned gain produces mean progress lift of 1.259 readiness levels; learned WASPAS and MARCOS profiles produce 1.234 and 1.254. For target attainment, learned-weight lift is negative, at −0.032 and −0.029, whereas direct prediction yields 0.118. Programme-separated and chronological results vary substantially. Predictive signal and local rank stability therefore do not establish reliable shortlisting benefit. The contribution is a reproducible empirical audit of the importance-to-ranking conversion, not a new learning algorithm or an estimate of stakeholder preferences.
 
-Keywords: multi-criteria decision-making; criterion weighting; supervised learning; permutation importance; technology portfolio; NASA TechPort; data leakage; outcome sensitivity; ranking robustness; WASPAS; MARCOS; decision support
+Keywords: technology portfolio screening; criterion weighting; permutation importance; nested validation; multi-criteria decision analysis; NASA TechPort; shortlist evaluation; outcome sensitivity
 
 ## 1 Introduction
 
-Technology portfolios require project comparisons across maturity, ambition, duration, technological domain and organisational participation. Multi-criteria decision-making (MCDM) offers a transparent way to represent these dimensions, yet its outputs depend strongly on the criterion weights supplied to the aggregation model. Weighting is therefore not a preliminary detail. It defines which trade-offs can influence a recommendation and how strongly they do so (Cinelli et al., 2020; Greco et al., 2025).
+Technology portfolio screening compares projects that differ in maturity, intended advancement, duration and organisational setting. Multi-criteria decision analysis (MCDA) makes such comparisons explicit, but the meaning of its coefficients depends on the evaluation model and the decision owner's objectives [1, 2]. Historical project data offer another source of information: a learner can predict a recorded outcome, and feature-importance magnitudes can be normalised into criterion weights. This produces a reproducible vector, but reproducibility alone does not show that its induced ranking is useful.
 
-Most weighting methods obtain information from either people or the decision matrix. Expert-oriented methods structure pairwise, ordinal or level-based judgements. Objective methods use variation, contrast, entropy or removal effects in the observed alternatives. Both families are useful, but neither automatically exploits the historical outcomes that accumulate in repeated project environments. This has encouraged integrations of machine learning and MCDM in which a learner is fitted to a recorded outcome and a feature-importance vector is normalised for later use as MCDM weights (Fu et al., 2021; Maghsoodi et al., 2023).
+The integration itself is established. Fu et al. linked learned weights to evidential reasoning [3], while Ijadi Maghsoodi et al. combined feature elimination, missing-data treatment and target-based MCDA [4]. More directly, Zindani and Singh used Random Forest weighting with TODIM and 5,000 weight-perturbation runs in materials selection [5]. Wang et al. subsequently proposed peer-prediction trees and endogenous uniqueness weighting [6]. A 2026 review also documents a substantial ML–MCDA integration literature [7]. Consequently, adding a learner to a familiar aggregation model, or demonstrating local perturbation stability, is insufficient as a contribution in its own right.
 
-The apparent simplicity of this integration hides four distinct questions. First, is the learner evaluated out of sample, or is an in-sample importance vector treated as evidence? Second, were the predictors available at the decision point, or do they contain information recorded after the outcome began to develop? Third, does an importance magnitude identify a preference direction? Fourth, would a different defensible outcome or learner produce similar weights and downstream rankings? Unless these questions are answered, data-derived weights can give an impression of objectivity while embedding circularity, model dependence and unreported normative assumptions.
+This article asks a narrower, testable question: does translating predictive reliance into unsigned criterion weights preserve useful information for screening unseen projects? Three distinctions matter. Predictive validity concerns an estimated outcome. Importance validity concerns how a fitted model relies on its inputs. Shortlist validity concerns the outcomes represented among the projects selected by a scoring rule. None of these quantities identifies stakeholder utility, and none is guaranteed by another. Recent work on feature-rank uncertainty and auditing reinforces the need to evaluate more than numerical stability [8, 9].
 
-These risks are especially visible in technology-readiness data. Suppose realised progress is defined as current technology readiness level (TRL) minus initial TRL. Including current TRL as a predictor places part of the outcome algebra inside the feature set. Removing current TRL alone is also insufficient when another predictor is target TRL minus current TRL. Even a genuinely baseline-oriented specification can remain outcome-dependent: planned TRL gain is an informative bound on raw realised progress, whereas a target-normalised attainment outcome asks whether the intended gain was achieved. Those outcomes answer different questions and need not produce the same importance profile.
+The question is examined using a frozen public NASA TechPort batch. Raw readiness progress and target-normalised attainment provide two defensible but different historical proxies. The descriptive analysis compares four learners, evaluates importance on held-out folds and propagates their profiles through WASPAS and MARCOS. The decisive extension places weight learning inside each outer training set and evaluates the resulting shortlist on projects whose outcomes were unavailable to every fitting stage. It also includes structural baselines, so that performance due mainly to planned maturation headroom is not attributed to a multivariate weighting method.
 
-This study reconstructs a NASA TechPort application around that problem. It does not propose Random Forest feature importance plus normalisation as a new artificial-intelligence algorithm. Instead, it develops and demonstrates a reproducible protocol for outcome-conditioned proxy importance. Four learners are assessed on identical repeated cross-validation splits. Importance is calculated by permuting features only in held-out folds, negative sampling estimates are handled explicitly, and fold-specific profiles are carried into a stability analysis. Two outcome definitions, two MCDM ranking models, conventional comparison profiles, grouped and chronological diagnostics, and bounded weight perturbations are then used to trace which conclusions are stable and which are specification-dependent.
+The contribution is the empirical separation of prediction, importance and shortlisting in a reproducible technology-portfolio audit. It is not a claim to have invented permutation importance, nested validation, criterion normalisation or either aggregation model. The analysis identifies when apparently persuasive evidence for learned weighting fails a more relevant comparison. Its scope is retrospective engineering decision support: no NASA decision, funding allocation, causal intervention or stakeholder-preference model is observed.
 
-The study makes three contributions. First, it provides a leakage-audit structure that distinguishes current-state, incompletely reduced and plausibly baseline-oriented predictor sets. Second, it supplies a learner-neutral conversion from held-out predictive reliance to non-negative unit-sum proxy weights, while formally separating magnitude from benefit/cost direction. Third, it quantifies the propagation of learner and outcome choices into WASPAS and MARCOS rankings rather than evaluating predictive performance and MCDM outputs as disconnected stages.
+## 2 Related work and evaluation requirements
 
-The empirical result is deliberately qualified. Raw TRL progress is predictable in this snapshot, but much of that predictability is associated with planned TRL gain. When the outcome is changed to the fraction of planned gain attained, predictive performance weakens and the importance structure changes. The resulting evidence supports a retrospective benchmarking contribution. It does not establish NASA preferences, a causal technology-maturation model or a prospective project-selection system.
+### 2.1 Weight meaning and learning targets
 
-The remainder of the article reviews the methodological background, documents the forensic data audit, defines the comparative protocol, reports predictive and MCDM results, and discusses managerial use and limitations.
+Preference-oriented weights, data-geometry coefficients and predictive importance are different objects. FUCOM structures ordered comparative judgements [10]; CRITIC combines dispersion and intercriterion conflict [11]; MEREC measures changes caused by removing criteria from a score construction [12]. These procedures need not agree because they extract different information. A review of subjective weighting likewise treats elicitation procedures as part of the decision model rather than interchangeable estimators of one universal parameter [13].
 
-## 2 Background and research gap
+The learned coefficients studied here measure relative reliance on a specified historical outcome. They do not estimate the trade-offs that a portfolio owner would endorse. Robust MCDA methods examine uncertainty in preferences and model structure [14, 15], whereas a learner's importance variability also reflects sampling, predictive loss and feature dependence. Treating these sources as equivalent would obscure which question a robustness calculation answers.
 
-### 2.1 Criterion weights and what they represent
+### 2.2 Feature importance is not a value function
 
-Criterion weights can represent several different constructs. In multi-attribute value models they commonly express trade-off or scaling information under stated value functions. In outranking or distance-based procedures they can affect concordance, separation or contribution to an aggregate index. Expert-derived methods such as the Full Consistency Method (FUCOM) seek internally coherent preference information from ordered comparative priorities (Pamučar et al., 2018). Objective methods instead derive coefficients from observed data geometry. The Method based on the Removal Effects of Criteria (MEREC), for example, assigns greater weight when removing a criterion changes alternative-level performance more strongly (Keshavarz-Ghorabaee et al., 2021).
+Permutation importance measures the deterioration in predictive performance when an input is disrupted. It remains model- and distribution-dependent; correlated predictors can make unrestricted permutations unrealistic [16]. Model-reliance research also shows why one importance vector should not stand for every predictively adequate model [17]. Recent work provides explicit guarantees for selected importance rankings [8] and examines causal-context problems in multivariate attribution [18]. The empirical fold percentiles reported here provide neither those guarantees nor causal identification.
 
-These interpretations are not interchangeable. Dispersion is not preference, predictive reliance is not marginal utility, and a coefficient that improves prediction is not automatically a statement that larger criterion values are desirable. Robust and stochastic MCDM research has long shown that rankings should be examined across plausible weight spaces rather than treated as mechanically certain (Tervonen et al., 2013; Corrente et al., 2017). The same discipline is needed when weights originate from a learner.
+A simple counterexample establishes the relevant limitation without requiring a new theorem. Consider one criterion x between zero and one and a perfectly known outcome y = 1 − x. Normalising its positive permutation importance yields weight one. If x is then declared a benefit, the induced ranking is the reverse of the outcome ranking. Perfect prediction therefore cannot make an unsigned importance coefficient identify direction or preserve the predictive decision rule. Nonlinearities and interactions create further opportunities for information loss when a fitted function is replaced by a weighted aggregate.
 
-### 2.2 Supervised learning as an empirical weighting layer
+### 2.3 Position relative to current integrations
 
-Supervised learning offers a way to ask which recorded attributes help predict a defined historical outcome. Elastic Net provides a regularised linear reference that can handle correlated predictors and shrink weak effects (Zou and Hastie, 2005). Random Forest averages decorrelated trees and captures nonlinearities and interactions (Breiman, 2001). Extra Trees adds stronger randomisation to tree construction (Geurts et al., 2006). Gradient boosting builds an additive nonlinear predictor by sequentially improving residual fit (Friedman, 2001). Comparing these learners is important because a single model cannot reveal whether an importance profile is data-driven or architecture-driven.
+The closest weighting applications motivate a validation requirement, not a claim that their results are generally wrong. Zindani and Singh's application illustrates the established Random-Forest-to-MCDA pathway [5]. Wang et al.'s peer-prediction method instead derives expectations from relationships among criteria, rather than an external maturation outcome [6]. It addresses a different estimand and is not a forecasting comparator here. The present evaluation uses outcome-matched baselines: simple headroom models, conventional coefficient profiles and direct predictions from the same Random Forest used to learn weights.
 
-Importance extraction adds another choice. Tree impurity importance is convenient but is calculated from the fitted training structure and can favour variables with more potential split points. Permutation importance instead measures the loss in predictive performance when a feature is disrupted (Breiman, 2001; Altmann et al., 2010). When calculated on held-out observations, it directly addresses whether a fitted model relied on the feature for unseen cases. It remains conditional on the learner, loss function, correlated-feature structure and observed distribution. Accordingly, the present study calls its normalised output a proxy-importance profile rather than a preference-weight estimate.
+Daneshvar et al. combine label randomisation, deletion and sufficiency checks with temporal explanation audits in data streams [9]. This article does not claim the first general importance-auditing protocol. It adds an engineering-portfolio demonstration in which the downstream conversion itself is tested on held-out alternatives, together with sensitivity to what counts as a successful historical outcome. Table 1 defines the dataset to which those findings apply.
 
-### 2.3 Leakage, validation and outcome dependence
+## 3 Data and outcomes
 
-Data leakage occurs when a model uses information unavailable at the intended prediction time or when preprocessing allows test information to influence training. In small datasets, a single train-test split also produces unstable performance estimates and can encourage selective interpretation. Nested or repeated validation helps separate model selection from performance assessment and exposes sampling variation (Varma and Simon, 2006). Here, identical repeated outer splits are used for every learner, and Elastic Net tuning occurs only within each outer training set.
+### 3.1 Frozen project batch
 
-Outcome definition is equally consequential. Raw progress rewards the absolute number of readiness levels gained. Target-normalised attainment measures the fraction of intended gain realised. A project planned to advance four levels and achieving three has greater raw progress but lower attainment than a project planned to advance one level and achieving it. Neither outcome is universally correct. The correct choice depends on the managerial question. Comparing them is therefore not an optional sensitivity exercise; it is part of construct validity.
+The source is the public TechPort API [19]. The repository contains a frozen batch of 299 released project records, not a probability sample or a census of NASA's technology portfolio. No live API call is required for reproduction. Project titles, identifiers and programme names are retained for traceability, but titles, identifiers and current TRL are excluded from the baseline-oriented predictor set.
 
-The research gap lies at the intersection of these issues. Existing machine-learning-MCDM applications demonstrate useful integrations, but often report one learner, one feature-importance mechanism and one outcome. The downstream ranking is then presented without testing whether another defensible learning specification changes the inferred weights. A publishable empirical weighting study should evaluate predictive validity, importance stability, outcome dependence and ranking propagation in a single auditable design.
-
-## 3 Data and forensic audit
-
-### 3.1 Frozen TechPort snapshot
-
-NASA TechPort is a public platform containing project descriptions, programme information, technology taxonomy fields, dates and TRL fields. The repository snapshot contains 299 released project records obtained through the TechPort application programming interface. The raw record is frozen for reproduction; the analysis does not query the live service. The public API is the data source, but NASA did not participate in the study and the resulting profiles are not NASA recommendations.
-
-[[PAGE_BREAK]]
-
-An audit of the legacy workflow identified material inconsistencies summarised in Table 1. The stored decision matrix had 299 rows and omitted taxonomy rarity, whereas the legacy model outputs corresponded to 214 complete cases. A stored summary also reported 299 complete cases. The notebook required files in an undocumented current working directory, and the API URL file contained thousands of blank, semicolon-padded rows. More importantly, the legacy analysis fitted one Random Forest on all observations, used impurity importance, and described a robustness model that removed current TRL while retaining a remaining-gap feature that still contained current TRL. The prior MARCOS implementation was also numerically unstable because near-zero anti-ideal sums generated extremely large scores.
+The six-feature analysis requires initial, current and target TRL; positive recorded duration; technology taxonomy information; and organisation count. There are 214 complete records under the current-state audit fields, of which 13 are not completed. The primary analysis therefore contains 201 completed projects. Five have zero planned gain and cannot enter the attainment-ratio analysis, leaving 196. Complete-case restriction and batch selection limit representativeness; the reported effects should not be extrapolated to all NASA projects.
 
 [[TABLE_1]]
 
-### 3.2 Sample construction
+### 3.2 Outcomes and predictor timing
 
-The revised primary sample retains projects recorded as completed and requires non-missing initial, current and target TRL; positive planned duration; technology taxonomy code and level; programme title; and other-organisation count. Projects with negative realised progress or negative planned gain would have been excluded, although none remained after the complete-case restriction. The resulting primary sample contains 201 projects. Realised progress ranges from zero to five TRL levels, with a mean of 1.672 and standard deviation of 1.132.
+For project i, raw progress is current TRL minus initial TRL. Planned gain is target TRL minus initial TRL. For the 196 projects with positive planned gain, attainment is realised progress divided by planned gain, capped at one. No retained project exceeds its target, so the cap does not change the observed values. These definitions are:
 
-The secondary sample excludes five projects with zero planned TRL gain, leaving 196 observations. Its outcome is the realised progress divided by planned gain, restricted to the interval from zero to one. The mean target attainment is 0.815. This cap prevents over-attainment from dominating the comparison, although no retained current TRL exceeds target TRL in the frozen snapshot.
+EQ: y_i^P = TRL_current,i − TRL_initial,i
 
-Complete-case analysis removes 98 of the 299 frozen records before the primary model. Missingness is therefore a limitation rather than a benign processing step. The package reports field-level missingness and included project identifiers so that readers can inspect selection effects.
+EQ: g_i = TRL_target,i − TRL_initial,i
 
-### 3.3 Outcomes, predictors and timing classes
+EQ: y_i^A = min(1, y_i^P / g_i),  g_i > 0
 
-The primary outcome for project i is:
+Raw progress averages 1.672 TRL levels with standard deviation 1.132; mean attainment is 0.815. Absolute progress rewards the number of levels gained, while attainment rewards completing the intended gain. A project advancing three of four planned levels outranks one advancing one of one under progress, but not under attainment. Neither proxy measures strategic value, transition to use, cost effectiveness or the desirability of the project.
 
-EQ: y_i^(P) = TRL_current,i - TRL_initial,i.
+Six predictors are retained: initial TRL, duration, planned gain, taxonomy depth, taxonomy rarity and number of other organisations. Duration is the difference between recorded end and start dates divided by 30.4375. In the descriptive analysis, rarity is reciprocal category frequency in the fixed 299-record batch. In the nested evaluation it is re-estimated from training projects only; a category absent from training receives rarity one. These are deliberately distinct descriptive and inductive preprocessing regimes.
 
-For projects with positive planned gain, the secondary outcome is:
-
-EQ: y_i^(A) = min{1, (TRL_current,i - TRL_initial,i) / (TRL_target,i - TRL_initial,i)}.
-
-Six predictors are used: initial TRL, planned duration in months, planned TRL gain, primary taxonomy level, taxonomy rarity and number of other organisations. Planned duration equals the recorded end date minus start date divided by 30.4375. Planned TRL gain equals target TRL minus initial TRL. Taxonomy rarity is the reciprocal frequency of the primary technology code in the frozen 299-project portfolio.
-
-These predictors are classified as plausibly baseline-available rather than proven baseline measurements. TechPort supplies a current snapshot, not a historical version of every field. The repository cannot establish that target dates, target TRL or organisation counts were never revised after project initiation. This is why the study is described as retrospective. A chronological holdout tests transport across project start dates, but it cannot repair unavailable field histories.
-
-[[PAGE_BREAK]]
-
-Table 2 distinguishes outcome timing, predictor timing and illustrative MCDM direction. The latter is deliberately separate. Initial TRL, planned gain, taxonomy level, taxonomy rarity and other-organisation count are treated as benefits, while duration is treated as a cost. These directions demonstrate propagation under a declared screening logic; they are not learned from the outcome and should not be read as NASA value judgements. In particular, greater taxonomy depth or rarity has no universal normative meaning.
+TechPort provides a current snapshot rather than the field values originally recorded at project initiation. Target TRL, dates and partners may have been revised. They are therefore plausibly baseline-available fields, not verified baseline measurements. Even a strict chronological separation of recorded start dates cannot establish that training outcomes or field revisions were observable at a historical funding decision. The analysis tests transport within a snapshot, not deployability.
 
 [[TABLE_2]]
 
-## 4 Method
+Initial TRL, planned gain, taxonomy depth, rarity and organisation count are treated as benefits; duration is treated as a cost. These directions are disclosed screening assumptions. In particular, neither deeper taxonomy nor rarity is universally desirable. Their role is to expose the consequences of translating unsigned importance into a declared value model, not to reconstruct NASA preferences.
 
-### 4.1 Comparative learning protocol
+## 4 Methods
 
-Figure 1 summarises the full audit, learning, importance and ranking-propagation workflow.
+### 4.1 Descriptive prediction and importance comparison
+
+Figure 1 separates the descriptive analysis from the outer-test shortlist evaluation. Elastic Net, Random Forest, Extra Trees and histogram gradient boosting provide linear and nonlinear references [20, 21, 22, 23]. They share five repetitions of five-fold cross-validation with seed 20260811. A mean-prediction baseline is included. Random Forest and Extra Trees use 200 trees and minimum leaf size two. Gradient boosting uses 150 iterations, learning rate 0.05, at most 15 leaves and L2 regularisation 0.1. Full settings are supplied in the supplement.
 
 [[FIGURE_1]]
 
-Let X be an n by m matrix of n projects and m = 6 predictors, and let y be one of the two outcomes. Four learners are compared: Elastic Net, Random Forest, Extra Trees and histogram gradient boosting. A mean-prediction model supplies a performance floor but does not generate importance weights. Random Forest and Extra Trees each use 200 trees and a minimum leaf size of two. Histogram gradient boosting uses a learning rate of 0.05, 150 iterations, at most 15 leaf nodes and L2 regularisation of 0.1. Elastic Net examines 60 logarithmically spaced penalty values and four mixing values using five-fold validation within each outer training set.
+Elastic Net searches 60 penalty values and four mixing values by five-fold inner validation. Scaling is fitted inside each inner training split through a pipeline-based grid search, avoiding preprocessing of inner validation cases [24]. Each outer repetition assembles a complete out-of-fold prediction vector. R², mean absolute error (MAE) and root mean squared error (RMSE) are then calculated across the complete vector rather than averaged from fold R² values.
 
-The outer design uses five repetitions of five-fold cross-validation with fixed seed 20260811. Every learner receives exactly the same 25 train-test partitions for an outcome. For each repetition, predictions from its five held-out folds are assembled into one complete out-of-fold vector. R-squared, mean absolute error (MAE) and root mean squared error (RMSE) are then calculated across all observations in that repetition. Reported means, standard deviations and t-based 95% intervals refer to five complete out-of-fold repetitions, not averages of fold-level R-squared values.
+For each outer held-out fold, ten permutations per feature estimate the increase in MAE [25]. Negative values are retained in detailed results, counted and then clipped at zero for coefficient construction. If every clipped value is zero, an equal profile is substituted and flagged. Fold profiles are averaged for the descriptive ranking comparison. Their empirical 2.5th and 97.5th percentiles describe partition variation, not population confidence limits. Repetitions reuse the same projects, so neither repeat-level intervals nor paired tests are interpreted as independent-sample inference.
 
-Paired Wilcoxon signed-rank tests compare each learner with the learner having the lowest mean primary-outcome MAE. Tests use the five repeat-level observations and Holm adjustment. With only five pairs, inferential resolution is limited; the tests are descriptive checks against strong claims, not a basis for declaring a universally superior learner.
+EQ: I_jlr = mean_b [MAE(y_r, f_lr(X_r,j^(perm,b))) − MAE(y_r, f_lr(X_r))]
 
-### 4.2 Held-out permutation importance and proxy weights
+EQ: w_jlr = max(0, I_jlr) / Σ_h max(0, I_hlr)
 
-For learner l, outer test fold r and feature j, the raw permutation importance is the increase in test MAE after independently permuting that feature ten times:
+These profiles are descriptive outputs of held-out importance estimation. They are not used as prevalidated weights for the same projects in the nested shortlist test described below.
 
-EQ: I_jlr = mean_b [ MAE(y_r, f_lr(X_r,j^(perm,b))) - MAE(y_r, f_lr(X_r)) ].
+### 4.2 Aggregation and descriptive robustness
 
-Sampling noise or correlated substitutes can produce negative values. To obtain a non-negative profile compatible with standard weighted MCDM models, negative values are clipped:
+For the descriptive choice universe, each benefit criterion is divided by its maximum and each cost criterion is transformed by its positive minimum divided by its value. Values entering logarithms have a disclosed 10⁻¹² floor. WASPAS averages weighted additive and weighted multiplicative scores with mixing coefficient 0.5 [26]. MARCOS uses the standard ideal and anti-ideal utility construction [27].
 
-EQ: I_jlr^+ = max(0, I_jlr).
+EQ: Q_i^W = 0.5 Σ_j w_j z_ij + 0.5 exp(Σ_j w_j log z_ij)
 
-The fold-specific proxy weight is:
+For fixed weights and comparison universe, standard MARCOS utility is a positive multiple of the weighted normalised row sum. Its rank agreement with WASPAS is therefore not independent evidence that a recommendation is valid. The supplement gives the algebra and a numerical invariant test. The models are used to inspect propagation under additive and additive–multiplicative aggregation.
 
-EQ: w_jlr = I_jlr^+ / sum_h I_hlr^+.
+Spearman correlation, Kendall correlation and top-ten overlap describe ranking differences. Primary and attainment weights are also applied to the same 196 projects to isolate outcome construction. Local robustness multiplies each primary cross-learner median weight by an independent uniform draw on [0.8, 1.2], renormalises and repeats 5,000 times. This quantifies stability near one profile, not uncertainty over stakeholder values or outcome choice.
 
-If all clipped values equal zero, an equal profile is used and the event is flagged. No such fallback is hidden. The output reports raw importance, negative-value frequency, fold-specific weights, means, standard deviations and empirical 2.5th and 97.5th percentiles. Clipping and normalisation make the vector usable in a weighted score, but do not change its interpretation: w is a relative predictive-reliance profile under a learner, outcome and sample.
+### 4.3 Leakage and transport diagnostics
 
-Learner agreement is assessed with Spearman correlation and Kendall tau between the six-feature weight orders, together with L1 distance between weight magnitudes. Downstream project ranks are compared using the same correlations and top-10 overlap.
+Three Random Forest specifications distinguish current-state algebra from baseline-oriented prediction. The first includes current TRL and remaining gap; the second removes current TRL but retains target minus current TRL; the third excludes both current-state quantities and uses planned gain. Since the outcome contains current TRL, removing one explicit column is not enough to remove algebraic dependence.
 
-### 4.3 Separation of empirical relevance and value assumptions
+Programme-separated validation prevents the same programme from appearing in both outer training and test sets. A start-date transport check trains on earlier-starting projects and evaluates later-starting projects. The strictly separated version in the nested evaluation uses 1 October 2021 as the boundary and keeps every project with that date on the test side: 157/44 primary training/test projects and 153/43 attainment projects. This avoids splitting a tied start date across partitions. It does not supply missing historical field versions or guarantee training-label availability at that date.
 
-The analytical pipeline treats three objects separately. The first is the outcome definition, which states the historical behaviour to be explained. The second is predictive reliance, estimated from held-out observations. The third is the value model used to rank projects. This separation prevents a common category error. Permutation importance is unsigned: disrupting a feature can damage prediction whether its association with the outcome is positive, negative or non-monotonic. A large importance therefore cannot determine whether the feature should be maximised, minimised or transformed around a target. The illustrative MCDM directions are declared independently and can be replaced without refitting the predictive models.
+### 4.4 Nested shortlist evaluation
 
-The study also avoids selecting a learner after inspecting the most convenient ranking. All four prespecified learners remain in the results, even when one performs poorly for the secondary outcome. The cross-learner median profile is used only for the bounded perturbation experiment; learner-specific profiles remain visible. In this way, predictive accuracy, weight stability and ranking behaviour are reported as different evidential layers. A learner can predict well but yield unstable weights, or several weight profiles can differ while producing similar rankings because the decision matrix compresses those differences. Neither case is captured by a single performance or rank-correlation statistic.
+The nested experiment evaluates the conversion from a predictor to an MCDA score rather than treating rank agreement as a performance metric. Random Forest is fixed as the reference importance learner because it is the model commonly used in the integration being audited, not because it wins every descriptive metric. Both its direct predictions and its normalised importance profiles are retained. This controlled comparison isolates information lost in the conversion while leaving the four-learner descriptive analysis visible.
 
-No threshold is used to label a project acceptable. Ranks are relative to the frozen comparison set, and a high rank is not evidence that a project meets strategic, budgetary, safety or feasibility requirements. Operational use would require those constraints before an MCDM score is interpreted. The present propagation is therefore a stress test of analytical consequences, not a recommendation list.
+For each outer split, three inner folds use only the outer training projects. An inner model is fitted, and its feature importance is evaluated on the corresponding inner held-out projects using ten permutations. The three signed importance vectors are averaged before clipping and unit-sum normalisation. Unlike the descriptive fold-average convention, this construction avoids giving an independently normalised weak inner fold the same total mass as an informative one. Every preprocessing step is fitted within the relevant training set. Programme-separated outer splits also use programme-separated inner folds.
 
-### 4.4 MCDM propagation
+The resulting weights are frozen before outer candidates are scored. Rarity counts, criterion scales, objective comparator weights and the direct Random Forest predictor are learned from outer training projects alone. Benefit scales use training maxima; cost scales use positive training minima. A candidate beyond the training range may have a ratio above one and is not used to rescale other candidates. No candidate outcome enters fitting, weight extraction or scale estimation.
 
-The raw decision matrix is ratio-normalised. For a benefit criterion j, n_ij = x_ij / max_i x_ij. For the duration cost, n_ij = min_i x_ij / x_ij. Values are bounded away from zero only for numerical evaluation of logarithms and products.
+There are 25 random outer splits, five programme-separated splits and one strictly start-date-separated split for each outcome. Random and programme splits are different transport questions, not independent datasets. The chronological cohort is one diagnostic and does not support a distribution-free claim about future performance.
 
-WASPAS combines a weighted sum and weighted product with equal mixing coefficient (Zavadskas et al., 2012):
+### 4.5 Comparators and screening metrics
 
-EQ: Q_i = 0.5 sum_j w_j n_ij + 0.5 product_j n_ij^(w_j).
+Comparator coefficients are equal, Shannon entropy, CRITIC, standard deviation and MEREC [28, 11, 12]. They are estimated from training data only and propagated through WASPAS. The full comparison also includes ranking by planned gain alone, ranking by initial TRL alone, direct Random Forest prediction, and the learned WASPAS and MARCOS profiles. Entropy and CRITIC use training min–max-scaled, direction-adjusted inputs; their full equations and constant-column handling are in the supplement. These profiles are not stakeholder-preference gold standards.
 
-MARCOS extends the normalised matrix with ideal and anti-ideal alternatives, calculates weighted sums S_i, and forms utility degrees K_i^- = S_i/S_AAI and K_i^+ = S_i/S_AI (Stević et al., 2020). The standard utility functions and final MARCOS utility are used rather than the legacy average of K values.
+Predictive ablations use an intercept-only mean, a linear planned-gain model, a linear initial-TRL-plus-gain model, a Random Forest without gain and the six-feature Random Forest. All are evaluated on identical outer cases with the same training-only rarity regime. This tests how much apparent learning is explained by the mechanical headroom associated with intended progress. It also prevents comparisons across different sample definitions from being mistaken for algorithmic gains.
 
-Each learner-specific mean profile and a cross-learner median profile are propagated through both ranking models. Four comparisons are retained: equal weights, standard-deviation weights, MEREC, and a solved FUCOM profile based on disclosed synthetic priority ratios. The FUCOM comparison is not elicited from stakeholders and is labelled synthetic throughout. It tests contrast with a coherent ordinal profile rather than claiming empirical preferences.
+The primary shortlist fraction is 20%, rounded upward within each outer test cohort; 10% and 30% are sensitivity checks. The main endpoint is mean observed outcome among selected candidates minus mean outcome of the candidate cohort. It is called outcome lift, not financial return or stakeholder utility. An oracle gap compares the shortlist mean with the best observed equal-size shortlist, and discounted ranking gain is retained as a supplementary metric.
 
-### 4.5 Robustness and generalisation diagnostics
+EQ: L_q = mean(y in shortlist_q) − mean(y in candidate cohort)
 
-Five diagnostics are applied. First, the leakage comparison fits the same Random Forest under (a) the legacy current-state predictors, (b) a partial reduction that removes current TRL but retains remaining TRL gap, and (c) the baseline-oriented predictor set. Second, programme-grouped five-fold validation is repeated five times so that projects from one programme do not appear in both training and test portions of a fold. Third, a chronological diagnostic trains on the earliest 80% of projects by recorded start date and tests on the latest 20%.
+When a tie crosses the selection boundary, remaining shortlist places are allocated fractionally and equally among tied candidates. This reports expected selection performance without breaking ties using project identifiers, record order or outcomes. Results are summarised as mean cohort-level lift, with all split-level values available. Programme folds have unequal sizes; cohort means are not population estimates. No significance claim is made from the overlapping random folds, and no policy is retrospectively selected as universally best.
 
-Fourth, the secondary-outcome weights are propagated over the same 196-project matrix as the primary weights, isolating the effect of outcome definition on the common alternatives. Fifth, every element of the primary cross-learner median profile is multiplied by an independent draw from a uniform distribution on [0.8, 1.2] and renormalised. Five thousand draws are evaluated for WASPAS and MARCOS. Spearman correlation, Kendall tau, top-10 overlap and project-level top-rank and top-10 acceptability are retained.
+### 4.6 Falsification and implementation checks
 
-All code, fixed seeds, processed samples, fold-level results, figures and file hashes are generated by one command. The software versions are Python 3.12, NumPy 2.3.5, pandas 2.2.3, SciPy 1.17.0 and scikit-learn 1.8.0 (Pedregosa et al., 2011).
+A label-randomisation test compares a prespecified five-fold Random Forest score with 100 permutations of the outcome. The model is refitted on every permutation with the same folds and training-only rarity construction. The corrected tail proportion is (1 + number of null scores at least as high as observed)/(101). This assesses overall predictive signal, not the significance of each feature or the validity of any preference direction. It cannot validate the subsequent scoring rule.
+
+The implementation checks partition disjointness, programme separation, chronological date separation, training-only rarity and normalisation, coefficient simplex constraints, fractional ties, oracle bounds and the unsigned-direction counterexample. The pipeline also rejects truncated image files and exports opaque, white-background publication figures. Code uses the pinned numerical environment and scikit-learn [29].
+
+### 4.7 Use of generative AI
+
+OpenAI ChatGPT assisted literature-search organisation, code revision, analysis checking, drafting and document formatting. Numerical findings were calculated by the executable analysis scripts, not supplied as generated estimates. The authors remain responsible for verifying citations, analytical decisions and the final text. The tool is not an author and did not provide stakeholder judgements or new observational data.
 
 ## 5 Results
 
-### 5.1 Predictive performance
+### 5.1 Descriptive predictive performance
 
-Table 3 reports repeated out-of-fold performance. For raw TRL progress, all four learners materially outperform mean prediction. Mean R-squared ranges from 0.553 for Extra Trees to 0.577 for histogram gradient boosting. Elastic Net and histogram gradient boosting have the lowest RMSE values, both approximately 0.735, whereas Extra Trees has the lowest MAE at 0.470. The metrics therefore do not identify one learner as uniformly best. Holm-adjusted paired tests are non-significant, which is unsurprising with five repeats and small differences among nonlinear models.
-
-Figure 2 visualises the cross-validated R-squared results, and Table 3 retains all three metrics and their uncertainty.
+Raw progress is predictable under random repeated folds: mean R² across the four learners ranges from 0.553–0.577. Target attainment is more difficult: the nonlinear range is 0.185–0.231, while Elastic Net has mean R² −0.067. Figure 2 and Table 3 retain the predictive comparison rather than assigning one winner across incompatible loss metrics. These results use the fixed-batch rarity variable and must not be conflated with the stricter training-only preprocessing in the nested experiment.
 
 [[FIGURE_2]]
 
 [[TABLE_3]]
 
-Target-normalised attainment is harder to predict. Elastic Net has mean R-squared -0.059, close to or worse than the mean baseline, while nonlinear learners achieve 0.185-0.231. Extra Trees again has the lowest MAE, 0.209, and Random Forest has the highest R-squared, 0.231. This decline is substantively important. Much of the predictability of raw progress disappears once planned ambition is placed in the outcome denominator.
+### 5.2 Outcome-conditioned importance
 
-Programme separation also lowers primary-outcome performance. Mean grouped R-squared ranges from 0.364 to 0.431, with Random Forest highest. In the chronological earliest-80%/latest-20% diagnostic, R-squared ranges from 0.253 to 0.463, with Elastic Net highest. Positive values indicate some transport, but the decline relative to random repeated folds confirms that within-portfolio performance should not be presented as a ready prospective system.
-
-### 5.2 Leakage audit
-
-The leakage diagnostic provides an initially counter-intuitive result. The legacy full current-state Random Forest achieves mean R-squared 0.469. Removing current TRL while retaining remaining gap reduces R-squared to 0.144. The leakage-aware baseline-oriented specification achieves 0.556. This does not validate a prospective interpretation. It shows that planned TRL gain is a strong predictor of absolute realised progress and that the incomplete deletion destroys information without constructing a coherent baseline question.
-
-The audit therefore changes the scientific conclusion. The main risk is not simply optimistic performance caused by current TRL. It is construct dependence: raw progress is strongly structured by the amount of progress planned. A model can be free of current-state algebra and still yield a profile dominated by the target scale embedded in the outcome.
-
-Figure 5 compares the three leakage-audit specifications.
-
-[[FIGURE_5]]
-
-### 5.3 Learner-specific proxy weights
-
-Table 4 reports primary-outcome profiles. Planned TRL gain receives 0.961 under Elastic Net, 0.799 under Random Forest, 0.788 under Extra Trees and 0.746 under histogram gradient boosting. All other mean weights are below 0.102. The nonlinear learners allocate more importance to duration, taxonomy level and taxonomy rarity than Elastic Net, but the target-gain dominance is shared.
-
-Figure 3 shows the same primary profiles with their outer-fold variation.
+Planned gain dominates every primary profile, receiving 0.746–0.963 of the total mean importance. Figure 3 and Table 4 show the remaining coefficients and their resampling variation. Differences among the small residual weights should not be interpreted as stable preference orderings. The secondary profiles shift towards taxonomy depth, rarity and duration, while the predictive performance of the associated models is weaker.
 
 [[FIGURE_3]]
 
 [[TABLE_4]]
 
-Weight-order agreement is positive but not perfect. Pairwise Spearman correlations range from 0.600 to 0.943, Kendall tau from 0.467 to 0.867, and L1 distance from 0.083 to 0.431. Random Forest and histogram gradient boosting agree most closely in criterion order; Elastic Net and histogram gradient boosting differ most in magnitude. Wide fold-level intervals and non-zero negative-importance frequencies for weak predictors show that small residual weights should not be over-interpreted.
+The result is consistent with headroom dependence: a project intended to advance more TRL levels can record more absolute progress. It does not establish that greater ambition deserves a correspondingly large normative weight. The outcome change alters the importance construct rather than merely perturbing its numerical estimate.
 
-The secondary profiles are qualitatively different. Nonlinear learners place the largest weights on taxonomy level, taxonomy rarity and planned duration, while planned gain receives only 0.009-0.029. Elastic Net performs poorly for this outcome and concentrates on taxonomy level; its secondary importance profile is therefore descriptive of a weak model, not evidence that the feature is decision-dominant. Across outcomes, learner-specific weight-order correlations range only from 0.029 to 0.371 and L1 distances from 1.435 to 1.787. Outcome choice has a larger effect than learner choice within the primary specification.
+### 5.3 Ranking propagation
 
-### 5.4 Downstream ranking behaviour
-
-Within the primary outcome, learner-specific ranking profiles are similar despite visible differences in minor weights. For WASPAS, pairwise rank correlations range from 0.972 to 0.997 and top-10 overlaps from nine to ten. For MARCOS, correlations range from 0.983 to 0.999 with the same top-10 range. Planned-gain dominance explains this stability: all learners place most mass on the same criterion.
-
-Figure 4 contrasts learner agreement in proxy-weight order and downstream project ranking.
+Figure 4 compares primary weight-order and WASPAS project-rank agreement across learners. High project-rank agreement coexists with visible differences in small coefficients because all learners emphasise planned gain. When the outcome changes but the 196-project universe is held fixed, correlations range from 0.298–0.372, with 0–3 common top-ten projects (Table 5). Outcome construction is therefore consequential even where within-outcome learner agreement is high.
 
 [[FIGURE_4]]
 
-WASPAS and MARCOS also agree strongly within a fixed learned profile. Primary cross-method correlations are at least 0.983 for the learner profiles, with nine or ten common top-10 projects. Equal, synthetic FUCOM and standard-deviation profiles show lower but still substantial cross-method agreement. This evidence does not mean that the methods are interchangeable; it means that the present ratio-normalised matrix and weight structures generate similar orders.
-
-Outcome changes are much more disruptive. When primary and secondary weights are applied to the same 196 projects, rank correlations range from 0.298 to 0.364 and top-10 overlaps from zero to two (Table 5). A project presented as robust under raw progress can therefore move substantially when the decision question changes from absolute advancement to target attainment. The outcome label is not a technical detail; it defines the empirical meaning of the weights.
-
 [[TABLE_5]]
 
-### 5.5 Weight perturbation and conventional comparisons
+### 5.4 Current-state leakage diagnostic
 
-Bounded perturbations around the primary cross-learner median profile produce high local stability. Across 5,000 draws, the minimum correlation with the baseline is 0.998 for WASPAS and 0.999 for MARCOS after rounding to three decimals. WASPAS retains all ten baseline top projects in every draw. MARCOS has mean top-10 overlap 9.996 and minimum overlap nine. Figure 6 shows the resulting narrow distributions.
+Mean Random Forest R² is 0.469 with legacy current-state inputs, 0.144 after removing current TRL but retaining remaining gap, and 0.556 under the baseline-oriented specification (Figure 5). The increase in the last model is not evidence that leakage was helpful or that future deployment is valid. Planned gain changes the information represented by the predictors and strongly structures raw progress. Removing current-state algebra and checking a meaningful structural baseline are separate requirements.
+
+[[FIGURE_5]]
+
+### 5.5 Local perturbation stability
+
+Across 5,000 bounded perturbations of the primary median profile, minimum rank correlation is 0.998–0.999 across the two aggregation models. This narrow neighbourhood yields highly stable rankings (Figure 6), but it does not address the outcome sensitivity in Table 5 or independent shortlist performance. MARCOS and WASPAS agreement also partly reflects their shared additive component and common dominant criterion.
 
 [[FIGURE_6]]
 
-This robustness is local to a fixed outcome and neighbourhood. It cannot offset the outcome sensitivity reported above. Monte Carlo perturbation answers whether modest numerical changes around one profile alter the ranking. It does not answer whether the outcome construct or learner family is appropriate. The conventional profiles further show that wider modelling choices produce greater differences than bounded perturbations, so local stability should never be reported alone.
+### 5.6 Structural baselines under training-only preprocessing
 
-[[PAGE_BREAK]]
+Table 6 provides the outcome-matched ablation. For progress, the gain-only linear model reaches mean random-fold R² 0.576, versus 0.543 for the full Random Forest; excluding gain from the forest yields −0.050. Random Forest has lower MAE than the gain-only model, at 0.521 versus 0.553, so the baseline is not uniformly superior across losses. Nevertheless, a six-feature algorithm is unnecessary to explain most of the R² result. The initial-TRL-plus-gain model yields 0.576, offering almost no additional explanatory performance over gain alone in random folds.
 
-Table 6 consolidates the leakage, transport and perturbation diagnostics that bound interpretation of the main ranking results.
+Under programme separation, progress R² is 0.558 for gain alone and 0.442 for the full forest. The corresponding chronological values are 0.490 and 0.449. For attainment, full-forest R² is 0.147 under random splits but falls to −0.694 under programme separation and −0.328 chronologically. Negative values are relative to the mean of the corresponding held-out outcomes. These results limit claims that the attainment importance structure transfers reliably across programmes or vintages.
 
 [[TABLE_6]]
 
+### 5.7 Independent shortlist outcomes
+
+The nested shortlist test does not show a consistent benefit from replacing simple rules with learned weights. In random progress cohorts, gain-only ranking produces lift 1.259, while learned WASPAS and MARCOS produce 1.234 and 1.254. Their paired mean differences from gain-only ranking are −0.024 and −0.005. WASPAS improves on gain alone in 10 of 25 cohorts and MARCOS in 12; neither pattern supports a general advantage.
+
+The progress result varies under transport. Programme-separated lift is 0.876 for gain alone, 0.828 for learned WASPAS and 0.844 for learned MARCOS. In the single chronological cohort, both learned aggregates yield 1.611 versus 1.367 for gain alone. That local improvement is retained, but it does not reverse the absence of a consistent advantage across validation settings.
+
+For attainment, random-cohort lift is −0.032 for learned WASPAS and −0.029 for learned MARCOS. Direct Random Forest prediction yields 0.118. Thus the same model can provide useful outcome ordering on these cohorts while its importance-to-aggregate conversion loses that information. The learned aggregates improve in the chronological cohort, whereas direct-prediction lift becomes negative. These reversals rule out a universal replacement rule in either direction. Table 7 and Figure 7 show the full comparison, including conventional weighting baselines.
+
+[[TABLE_7]]
+
+[[FIGURE_7]]
+
+The 10% and 30% results, oracle gaps, discounted ranking gain and every fold-level selection result are included in the supplement and machine-readable outputs. No superior policy is inferred simply because it wins one chronological or programme test.
+
+### 5.8 Label randomisation
+
+The prespecified full-forest five-fold R² values are 0.193–0.523 across the two outcomes. The largest null values from 100 label permutations are −0.031–−0.013, with corrected tail proportions 0.0099 for both outcomes. This supports predictive signal under the stated snapshot and split design. It does not contradict the poor attainment performance of the converted scores: signal detection concerns the fitted predictor, whereas shortlist lift concerns the rule actually used to select candidates.
+
 ## 6 Discussion
 
-### 6.1 What can be learned from historical outcomes
+### 6.1 What the audit adds
 
-Historical outcomes can provide an empirical lens on criterion relevance. In this study, held-out predictions show that baseline-oriented TechPort fields contain information about realised TRL progress. The approach is more defensible than fitting one ensemble to all data and reporting impurity importance because it exposes predictive error, fold-to-fold variability and learner dependence. It also preserves compatibility with standard MCDM models without proposing another ranking algorithm.
+The empirical finding is not that machine learning cannot support MCDA. It is that three persuasive observations can coexist without establishing the intended screening benefit: nonzero predictive skill, a reproducible importance profile and stability under modest weight perturbation. Here a simple planned-gain model explains most progress predictability, and importance-derived aggregates fail to improve random-cohort progress shortlists consistently. Under attainment, they can underperform random selection despite a useful direct predictor on the same outer cohorts.
 
-The strongest finding, however, is a warning. For raw progress, planned gain dominates every learner. That result is statistically coherent and managerially unsurprising: projects designed for more maturation have more opportunity to record absolute progress. It is not evidence that planned ambition deserves almost all normative decision weight. A portfolio manager may instead care about efficiency, strategic fit, target attainment, risk or knowledge spillovers. Predictive reliance on the selected outcome cannot decide among those values.
+This changes the interpretation of earlier integration patterns [3, 5]. A historical-outcome learner does not automatically supply a value model. Independent testing must evaluate the complete conversion rather than the predictor alone. A new attribution estimator might improve explanation reliability, but cannot by itself establish that maximising its unsigned coefficients is a defensible preference model. The direction counterexample and the observed direct-prediction-versus-weighted-score contrast make that distinction explicit.
 
-Normalising by planned gain changes the question and changes the learned profiles. The nonlinear models retain modest predictive skill, but the features they use are no longer the same. This demonstrates why learned weighting needs an outcome-design stage before model fitting. A technically accurate learner can answer the wrong managerial question precisely.
+### 6.2 Implications for technology screening
 
-### 6.2 Implications for MCDM practice
+A portfolio analyst should first decide which historical proxy is relevant. Absolute maturation, target completion, transition to application and cost-adjusted progress are not interchangeable. An analyst should next compare the full method with a simple rule reflecting the proxy's construction. If planned gain alone gives similar predictive or shortlisting performance, complexity requires another justification, such as interpretability, operational constraints or stakeholder relevance that is measured rather than assumed.
 
-Three practical safeguards follow. First, analysts should label learned profiles according to their outcome, learner and time frame. A generic name such as “AI weight” hides the source of the coefficients. Second, predictive importance and value direction should be stored separately. The former is estimated; the latter requires a stated policy, stakeholder process or value model. Third, robustness should span constructs, models and MCDM propagation. Perturbing one final vector by ten or twenty per cent is insufficient when alternative outcomes generate nearly disjoint top-10 sets.
+The screening rule itself must then be evaluated on candidates excluded from weight learning. Outcomes used to estimate importance cannot subsequently be called independent evidence for the induced project rankings. Training-only scale and rarity construction are equally necessary for an inductive claim. Where candidate sets are intentionally known in advance, a descriptive transductive analysis can be legitimate, but should not be presented as an unseen-project forecast.
 
-The cross-learner median profile used here is a descriptive consensus, not a new estimator claimed to be optimal. It is useful for bounded perturbation because it avoids privileging one of several comparably performing learners. In an operational application, model selection or averaging should be defined before outcome inspection and should reflect the cost of prediction errors.
+Benefit/cost directions require a domain decision. A criterion may be predictively relevant because it signals difficulty, delay or disadvantage. Giving it positive utility because its importance is large can reverse the intended recommendation. A practical model record should therefore preserve outcome definition, predictor timing, signed or nonlinear relationships, value assumptions, comparison universe, coefficient vector and an outer-test shortlist report. Without these records, an apparently objective learned weight can conceal a substantial modelling choice.
 
-The corrected conventional benchmarks also have a limited but useful role. MEREC and standard-deviation weights describe decision-matrix structure. Synthetic FUCOM describes a coherent hypothetical priority order. None is a gold standard for the learned profiles because no stakeholder preference study is available. Their purpose is to reveal how different information sources propagate, not to validate one another by correlation.
+### 6.3 Robustness and practical boundaries
 
-### 6.3 Governance and reporting implications
+Local numerical stability is useful for detecting fragile recommendations, but is weak evidence when a profile is dominated by one structural variable. The appropriate robustness questions include outcome definition, train/test separation, programme and vintage transport, comparator simplicity and the translation from prediction to action. Modern explanation audits motivate a similar separation of signal, faithfulness and stability [9]. The present results add that a stable coefficient profile may be a poor scoring policy even when the predictor passes a signal falsification check.
 
-For an organisation considering this workflow, the minimum governance artefact is a model card linked to a versioned decision dataset. It should record the decision date, intended users, outcome window, predictors available at that date, missing-data rules, learning algorithm, validation partitions, importance transformation, value directions and known prohibited uses. Each released ranking should also retain the project universe and weight vector from which it was calculated. Without these records, a later change in the live portfolio can make an apparently reproducible score impossible to reconstruct.
-
-The results suggest a practical approval sequence. A domain owner should first approve the outcome as a meaningful historical proxy. A data steward should then verify time availability and revision histories for every predictor. A modelling reviewer should check out-of-sample performance and importance uncertainty. Finally, a decision owner should approve directions, value functions and constraints. The stages should not be collapsed into model fitting because they answer different accountability questions. In particular, decision owners should not be asked to endorse a weight vector before seeing how alternative defensible outcomes alter the ranking.
-
-Monitoring would also be necessary in a continuing system. Changes in programme composition, TRL recording practice or project selection can alter both performance and importance. Predefined triggers could include a fall in grouped or chronological performance, an increase in clipping frequency, a large distance between successive importance profiles, or systematic rank changes for protected project classes. Such monitoring is outside this retrospective study, but stating it clarifies the gap between a research demonstration and an operational decision-support service.
-
-### 6.4 Technology-portfolio interpretation
-
-TechPort provides a credible public environment for demonstrating the protocol, but the project ranks should not be used as NASA recommendations. The snapshot mixes programmes, technology domains and project vintages. Higher initial TRL, taxonomy depth, rarity or collaboration count may be desirable under one screening objective and undesirable or irrelevant under another. The rankings are therefore methodological outputs under declared assumptions.
-
-For technology-management practice, the main transferable idea is the audit sequence: define the decision time, classify variables by availability, define outcomes that match the managerial objective, compare credible learners out of sample, examine stability of importance, declare direction assumptions and trace results through more than one aggregation model. This sequence can be applied to defence acquisition, research funding, innovation portfolios and stage-gate systems when versioned historical records exist.
+The findings do not identify a preferred NASA project list. No budgets, strategic priorities, interactions among selected projects or constraints on programme balance are modelled. A fixed-fraction shortlist treats selection capacity as equal slots and reports outcomes of already-completed projects. It cannot estimate what would have happened if other projects had been funded, or the value of reallocating resources. An operational portfolio model would require prospective data provenance, stakeholder value functions, constraints and a policy-specific validation design.
 
 ## 7 Limitations
 
-The first limitation is temporal provenance. The source is a frozen current snapshot, not a panel of field values as originally recorded at each project start. Dates, target TRL and organisation counts are plausibly baseline-available but may have been revised. The analysis cannot claim a deployable ex-ante forecast. Future research should use versioned records or prospectively frozen decision packets.
+The study uses one nonrandom batch and 201 complete completed-project records. Missingness and completion conditioning can alter the observed associations. No independent agency or later frozen batch is available, and repeated folds are not external replications. The small chronological and programme cohorts also make performance sensitive to composition.
 
-Second, the complete-case primary sample contains 201 projects from one public portfolio. Programme-grouped and chronological results remain positive, but external validity is untested. Replication in another technology organisation is necessary before generalising the importance patterns.
+Snapshot provenance remains unresolved. Strictly separating recorded start dates does not prove that fields were frozen at initiation or that all earlier-starting projects had completed by the first test start. The chronological results are accordingly transport diagnostics, not historical investment backtests. The larger public TechPort inventory must not be confused with the small frozen analytical batch.
 
-Third, both outcomes are based on coarse TRL integers. Raw progress is bounded by planned gain, while the attainment ratio compresses over-achievement and is undefined for zero planned gain. Other outcomes, such as time-to-milestone, budget-adjusted progress, transition success or expert-rated value, would answer different questions and may require classification, survival or ordinal models.
+TRL values are coarse ordered levels whose numerical differences and ratios are treated as working summaries. Raw progress is bounded by planned gain in every retained record; this is an empirical property of this batch, not a universal law. Other outcomes could yield different importance and shortlist patterns. Correlated-feature permutation can also extrapolate [16], and clipping noisy negative loss increases can create mass at zero. No conditional-importance or causal guarantee is claimed.
 
-Fourth, permutation importance can divide relevance among correlated features and can be negative by sampling variation. Clipping is transparent and convenient for MCDM but creates mass at zero. The reported clipping frequencies and intervals mitigate, but do not eliminate, this limitation. Conditional permutation or grouped importance could be explored with larger data.
+The nested importance experiment fixes Random Forest and two aggregation functions rather than exhaustively searching learners, attribution methods and preference models. It tests a common conversion route under disclosed assumptions. Broader generalisation requires independent portfolios and prespecified follow-up comparisons. Label randomisation is limited to 100 draws and tests overall predictive signal only. Finally, outcome lift is an observational diagnostic with no causal or welfare interpretation.
 
-Fifth, benefit/cost directions are illustrative. Neither the source data nor predictive models identify stakeholder utility. Actual portfolio use would require value-focused stakeholder work, explicit scale construction and governance review. Similarly, the synthetic FUCOM profile is not real elicitation.
+## 8 Conclusions
 
-Finally, repeated random, grouped and chronological validation quantify internal and transport behaviour but do not establish causality. No result should be interpreted as the effect of changing a criterion or as advice to manipulate recorded project attributes.
+In this NASA TechPort batch, predictive importance does not provide a consistently better technology-screening rule than simple structural comparators. A planned-gain-only model explains most raw-progress predictability, while nested importance-derived shortlists do not consistently outperform gain-only ranking. For attainment, direct predictions and converted coefficients can lead to opposite selection results on the same unseen cohorts. Local weight stability does not resolve these failures, and transport results vary.
 
-## 8 Conclusion
+The defensible use of learned coefficients is therefore conditional. They can describe predictive reliance and support transparent sensitivity analysis. To support screening, the complete scoring rule must additionally demonstrate relevant shortlist performance against simple baselines, with independent candidates, training-only preprocessing and separately justified value assumptions. This empirical audit supplies a reproducible way to expose that distinction without claiming a new AI algorithm or replacing stakeholder judgement.
 
-This study shows how supervised learning can be integrated with MCDM without disguising predictive reliance as preference. A leakage-aware, repeated-cross-validation protocol derives held-out permutation proxy weights from four learners and traces them through corrected WASPAS and MARCOS models. In the NASA TechPort snapshot, raw TRL progress is moderately predictable, but the resulting profiles are dominated by planned TRL gain. A target-normalised outcome is harder to predict and produces substantially different weights and rankings.
+## List of abbreviations
 
-The evidence supports three conclusions. Learner comparison is necessary but, in this application, outcome construction matters more than learner choice. Local Monte Carlo stability does not establish construct robustness. Finally, learned importance magnitudes require separate normative directions and cannot support causal or stakeholder-preference claims. Used within these boundaries, outcome-conditioned proxy profiles can make historical-data-informed MCDM more transparent and auditable. Used without them, they risk replacing explicit judgement with hidden specification choices.
+AI artificial intelligence; CRITIC Criteria Importance Through Intercriteria Correlation; FUCOM Full Consistency Method; MAE mean absolute error; MARCOS Measurement of Alternatives and Ranking according to Compromise Solution; MCDA multi-criteria decision analysis; MCDM multi-criteria decision-making; MEREC Method based on the Removal Effects of Criteria; RF Random Forest; RMSE root mean squared error; SD standard deviation; TRL technology readiness level; WASPAS Weighted Aggregated Sum Product Assessment.
 
-## Conflict of interest
+## Declarations
 
-All authors declare that they have no conflicts of interest.
+### Availability of data and materials
 
-## Data availability
+The frozen source records, analysis scripts, processed samples, fold membership, importance profiles and shortlist results are available in the reproducibility repository [30]. A copy of the replication data and code accompanies this submission. Earlier Zenodo versions preserve superseded analyses and are not substitutes for the revision-specific files. The repository commit associated with this package is recorded in its reproducibility note.
 
-An anonymised replication package containing the frozen data snapshot, scripts, generated tables, figures and hash manifest is supplied for review. Public repository and versioned archive links are provided in the separate title-page file and will be inserted into the article after double-blind review.
+### Competing interests
+
+The authors declare that they have no competing interests.
+
+### Funding
+
+This research received no specific grant from any funding agency in the public, commercial or not-for-profit sectors.
+
+### Authors contributions
+
+AB contributed conceptualisation, data curation, formal analysis, investigation, methodology, software, validation, visualisation and drafting. CTG contributed conceptualisation, methodology, supervision, validation and critical review and editing. The authors are responsible for the submitted content.
+
+### Acknowledgements
+
+Not applicable.
+
+### Ethics approval and consent to participate
+
+Not applicable. The study analyses publicly released project-level administrative records and involves no recruited participants or intervention.
+
+### Consent for publication
+
+Not applicable.
+
+### Institutional disclaimer
+
+The views and conclusions are those of the authors and do not represent official positions or recommendations of NATO, NSPA or NASA. NASA did not participate in the study.
 
 ## References
 
-Altmann, A., Toloşi, L., Sander, O. and Lengauer, T. (2010) ‘Permutation importance: a corrected feature importance measure’, Bioinformatics, Vol. 26, No. 10, pp.1340-1347, doi: 10.1093/bioinformatics/btq134.
+1. Cinelli M, Kadziński M, Gonzalez M, Słowiński R (2020) How to support the application of multiple criteria decision analysis? Let us start with a comprehensive taxonomy. Omega 96:102261. https://doi.org/10.1016/j.omega.2020.102261
 
-Breiman, L. (2001) ‘Random forests’, Machine Learning, Vol. 45, No. 1, pp.5-32, doi: 10.1023/A:1010933404324.
+2. Greco S, Słowiński R, Wallenius J (2025) Fifty years of multiple criteria decision analysis: From classical methods to robust ordinal regression. European Journal of Operational Research 323(2):351-377. https://doi.org/10.1016/j.ejor.2024.07.038
 
-Cinelli, M., Kadziński, M., Gonzalez, M. and Słowiński, R. (2020) ‘How to support the application of multiple criteria decision analysis? Let us start with a comprehensive taxonomy’, Omega, Vol. 96, 102261, doi: 10.1016/j.omega.2020.102261.
+3. Fu C, Xu C, Xue M, Liu W, Yang S (2021) Data-driven decision making based on evidential reasoning approach and machine learning algorithms. Applied Soft Computing 110:107622. https://doi.org/10.1016/j.asoc.2021.107622
 
-Corrente, S., Figueira, J.R., Greco, S. and Słowiński, R. (2017) ‘A robust ranking method extending ELECTRE III to hierarchy of interacting criteria, imprecise weights and stochastic analysis’, Omega, Vol. 73, pp.1-17, doi: 10.1016/j.omega.2016.11.008.
+4. Ijadi Maghsoodi A, Torkayesh AE, Wood LC, Herrera-Viedma E, Govindan K (2023) A machine learning driven multiple criteria decision analysis using LS-SVM feature elimination: Sustainability performance assessment with incomplete data. Engineering Applications of Artificial Intelligence 119:105785. https://doi.org/10.1016/j.engappai.2022.105785
 
-Fisher, A., Rudin, C. and Dominici, F. (2019) ‘All models are wrong, but many are useful: learning a variable’s importance by studying an entire class of prediction models simultaneously’, Journal of Machine Learning Research, Vol. 20, No. 177, pp.1-81.
+5. Zindani D, Singh S (2025) Leveraging random forest regression for informed and risk-aware material selection in supercapacitor fabrication. Journal of Engineering and Applied Science 72(1):223. https://doi.org/10.1186/s44147-025-00789-4
 
-Friedman, J.H. (2001) ‘Greedy function approximation: a gradient boosting machine’, The Annals of Statistics, Vol. 29, No. 5, pp.1189-1232, doi: 10.1214/aos/1013203451.
+6. Wang Z, Lim T, Baydaş M, Stević Ž, Yu Y, Liu V (2026) A Machine Learning Approach to Multi-Criteria Decision-Making via Peer-Prediction Trees and Excess Performance Evaluation. Algorithms 19(9):762. https://doi.org/10.3390/a19090762
 
-Fu, C., Chang, W., Xue, M. and Yang, S. (2021) ‘Data-driven decision making based on evidential reasoning approach and machine learning algorithms’, Applied Soft Computing, Vol. 110, 107622, doi: 10.1016/j.asoc.2021.107622.
+7. Upadhyay D, Kumar A, Pant S, Kotecha K, Abraham A (2026) Machine learning assisted multi-criteria decision-making approaches for site selection: A systematic review. MethodsX 17:104007. https://doi.org/10.1016/j.mex.2026.104007
 
-Geurts, P., Ernst, D. and Wehenkel, L. (2006) ‘Extremely randomized trees’, Machine Learning, Vol. 63, No. 1, pp.3-42, doi: 10.1007/s10994-006-6226-1.
+8. Goldwasser J, Hooker G (2025) Statistical significance of feature importance rankings. Proceedings of the Forty-first Conference on Uncertainty in Artificial Intelligence. PMLR 286:1476–1496. https://proceedings.mlr.press/v286/goldwasser25a.html
 
-Greco, S., Słowiński, R. and Wallenius, J. (2025) ‘Fifty years of multiple criteria decision analysis: from classical methods to robust ordinal regression’, European Journal of Operational Research, Vol. 323, No. 2, pp.351-377, doi: 10.1016/j.ejor.2024.07.038.
+9. Daneshvar B, Fahy C, Yang S (2026) Auditing feature importance rankings in nonstationary data streams. Proceedings of the Fourth UK AI Conference 2026. PMLR 348:42–51. https://proceedings.mlr.press/v348/daneshvar26a.html
 
-Holm, S. (1979) ‘A simple sequentially rejective multiple test procedure’, Scandinavian Journal of Statistics, Vol. 6, No. 2, pp.65-70.
+10. Pamučar D, Stević Ž, Sremac S (2018) A New Model for Determining Weight Coefficients of Criteria in MCDM Models: Full Consistency Method (FUCOM). Symmetry 10(9):393. https://doi.org/10.3390/sym10090393
 
-Keshavarz-Ghorabaee, M., Amiri, M., Zavadskas, E.K., Turskis, Z. and Antucheviciene, J. (2021) ‘Determination of objective weights using a new method based on the removal effects of criteria (MEREC)’, Symmetry, Vol. 13, No. 4, 525, doi: 10.3390/sym13040525.
+11. Diakoulaki D, Mavrotas G, Papayannakis L (1995) Determining objective weights in multiple criteria problems: The critic method. Computers &amp; Operations Research 22(7):763-770. https://doi.org/10.1016/0305-0548(94)00059-H
 
-Kizielewicz, B., Tomczyk, T., Gandor, M. and Sałabun, W. (2024) ‘Subjective weight determination methods in multi-criteria decision-making: a systematic review’, Procedia Computer Science, Vol. 246, pp.5396-5407, doi: 10.1016/j.procs.2024.09.673.
+12. Keshavarz-Ghorabaee M, Amiri M, Zavadskas EK, Turskis Z, Antucheviciene J (2021) Determination of Objective Weights Using a New Method Based on the Removal Effects of Criteria (MEREC). Symmetry 13(4):525. https://doi.org/10.3390/sym13040525
 
-Maghsoodi, A.I., Khalilzadeh, M., Poursoltan, P., Antucheviciene, J. and Turskis, Z. (2023) ‘A machine learning driven multiple criteria decision analysis using LS-SVM feature elimination: sustainability performance assessment with incomplete data’, Engineering Applications of Artificial Intelligence, Vol. 119, 105785, doi: 10.1016/j.engappai.2022.105785.
+13. Kizielewicz B, Tomczyk T, Gandor M, Sałabun W (2024) Subjective weight determination methods in multi-criteria decision-making: a systematic review. Procedia Computer Science 246:5396-5407. https://doi.org/10.1016/j.procs.2024.09.673
 
-NASA (2017) NASA Systems Engineering Handbook, NASA/SP-2016-6105 Rev. 2, National Aeronautics and Space Administration, Washington, DC.
+14. Tervonen T, van Valkenhoef G, Baştürk N, Postmus D (2013) Hit-And-Run enables efficient weight generation for simulation-based multiple criteria decision analysis. European Journal of Operational Research 224(3):552-559. https://doi.org/10.1016/j.ejor.2012.08.026
 
-NASA (2026) ‘TechPort API’, available at https://techport.nasa.gov/help/api (accessed 11 August 2026).
+15. Corrente S, Figueira JR, Greco S, Słowiński R (2017) A robust ranking method extending ELECTRE III to hierarchy of interacting criteria, imprecise weights and stochastic analysis. Omega 73:1-17. https://doi.org/10.1016/j.omega.2016.11.008
 
-Pamučar, D., Stević, Ž. and Sremac, S. (2018) ‘A new model for determining weight coefficients of criteria in MCDM models: Full Consistency Method (FUCOM)’, Symmetry, Vol. 10, No. 9, 393, doi: 10.3390/sym10090393.
+16. Hooker G, Mentch L, Zhou S (2021) Unrestricted permutation forces extrapolation: variable importance requires at least one more model, or there is no free variable importance. Statistics and Computing 31(6):82. https://doi.org/10.1007/s11222-021-10057-z
 
-Pedregosa, F. et al. (2011) ‘Scikit-learn: machine learning in Python’, Journal of Machine Learning Research, Vol. 12, pp.2825-2830.
+17. Fisher A, Rudin C, Dominici F (2019) All models are wrong, but many are useful: Learning a variable’s importance by studying an entire class of prediction models simultaneously. Journal of Machine Learning Research 20(177):1–81. https://jmlr.org/papers/v20/18-760.html
 
-Stević, Ž., Pamučar, D., Puška, A. and Chatterjee, P. (2020) ‘Sustainable supplier selection in healthcare industries using a new MCDM method: Measurement of Alternatives and Ranking according to Compromise Solution (MARCOS)’, Computers & Industrial Engineering, Vol. 140, 106231, doi: 10.1016/j.cie.2019.106231.
+18. Martin J, Haufe S (2026) cc-Shapley: Measuring multivariate feature importance needs causal context. Proceedings of the 42nd Conference on Uncertainty in Artificial Intelligence. PMLR 337:4323–4352. https://proceedings.mlr.press/v337/martin26a.html
 
-Tervonen, T., van Valkenhoef, G., Baştürk, N. and Postmus, D. (2013) ‘Hit-And-Run enables efficient weight generation for simulation-based multiple criteria decision analysis’, European Journal of Operational Research, Vol. 224, No. 3, pp.552-559, doi: 10.1016/j.ejor.2012.08.026.
+19. NASA (2026) TechPort API. https://techport.nasa.gov/help/api. Accessed 22 October 2026. The study uses the frozen repository batch, not a live API extraction on the access date.
 
-Varma, S. and Simon, R. (2006) ‘Bias in error estimation when using cross-validation for model selection’, BMC Bioinformatics, Vol. 7, 91, doi: 10.1186/1471-2105-7-91.
+20. Zou H, Hastie T (2005) Regularization and Variable Selection Via the Elastic Net. Journal of the Royal Statistical Society Series B: Statistical Methodology 67(2):301-320. https://doi.org/10.1111/j.1467-9868.2005.00503.x
 
-Zavadskas, E.K., Turskis, Z., Antucheviciene, J. and Zakarevicius, A. (2012) ‘Optimization of weighted aggregated sum product assessment’, Elektronika ir Elektrotechnika, Vol. 122, No. 6, pp.3-6, doi: 10.5755/j01.eee.122.6.1810.
+21. Breiman L (2001) Random Forests. Machine Learning 45(1):5-32. https://doi.org/10.1023/A:1010933404324
 
-Zou, H. and Hastie, T. (2005) ‘Regularization and variable selection via the elastic net’, Journal of the Royal Statistical Society: Series B, Vol. 67, No. 2, pp.301-320, doi: 10.1111/j.1467-9868.2005.00503.x.
+22. Geurts P, Ernst D, Wehenkel L (2006) Extremely randomized trees. Machine Learning 63(1):3-42. https://doi.org/10.1007/s10994-006-6226-1
+
+23. Friedman JH (2001) Greedy function approximation: A gradient boosting machine. The Annals of Statistics 29(5):1189-1232. https://doi.org/10.1214/aos/1013203451
+
+24. Varma S, Simon R (2006) Bias in error estimation when using cross-validation for model selection. BMC Bioinformatics 7(1):91. https://doi.org/10.1186/1471-2105-7-91
+
+25. Altmann A, Toloşi L, Sander O, Lengauer T (2010) Permutation importance: a corrected feature importance measure. Bioinformatics 26(10):1340-1347. https://doi.org/10.1093/bioinformatics/btq134
+
+26. Zavadskas EK, Turskis Z, Antucheviciene J, Zakarevicius A (2012) Optimization of Weighted Aggregated Sum Product Assessment. Elektronika ir Elektrotechnika 122(6):3-6. https://doi.org/10.5755/j01.eee.122.6.1810
+
+27. Stević Ž, Pamučar D, Puška A, Chatterjee P (2020) Sustainable supplier selection in healthcare industries using a new MCDM method: Measurement of alternatives and ranking according to COmpromise solution (MARCOS). Computers &amp; Industrial Engineering 140:106231. https://doi.org/10.1016/j.cie.2019.106231
+
+28. Shannon CE (1948) A Mathematical Theory of Communication. Bell System Technical Journal 27(3):379-423. https://doi.org/10.1002/j.1538-7305.1948.tb01338.x
+
+29. Pedregosa F et al (2011) Scikit-learn: Machine learning in Python. Journal of Machine Learning Research 12:2825–2830. https://jmlr.org/papers/v12/pedregosa11a.html
+
+30. Bengöz A, Temel Gencer C (2026) Reproducibility package for auditing learned criterion weights in technology portfolio screening. Version 3.0.0. https://github.com/ahmetbengoz/AICW-NASA-TechPort-Portfolio. Accessed 22 October 2026.

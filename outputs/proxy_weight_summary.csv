@@ -1,10 +1,10 @@
 outcome_specification,learner,feature,feature_label,mean_weight,sd_weight,ci95_low,ci95_high,negative_importance_fraction,n_outer_folds
-primary_progress,ElasticNet,initial_trl,Initial TRL,0.0014433557247474065,0.003775078885093054,0.0,0.011451215239303878,0.12,25
-primary_progress,ElasticNet,planned_duration_months,Planned duration,0.0002697441561318944,0.0009014163813360902,0.0,0.003259759172644339,0.16,25
-primary_progress,ElasticNet,planned_trl_gain,Planned TRL gain,0.9611931222550864,0.03208391144674904,0.896321453992333,1.0,0.0,25
-primary_progress,ElasticNet,taxonomy_level,Taxonomy level,0.03433093324708785,0.02736298653461085,0.0,0.0850886101637046,0.08,25
-primary_progress,ElasticNet,taxonomy_rarity,Taxonomy rarity,0.0027567199590407526,0.006473098896538868,0.0,0.0193376533934819,0.28,25
-primary_progress,ElasticNet,other_organization_count,Other organizations,6.12465790570613e-06,3.062328952853065e-05,0.0,6.124657905706108e-05,0.12,25
+primary_progress,ElasticNet,initial_trl,Initial TRL,0.0017591416551572718,0.004318523189963834,0.0,0.014347954176831079,0.12,25
+primary_progress,ElasticNet,planned_duration_months,Planned duration,0.00025020116973212736,0.0008366616392173673,0.0,0.0029695606702565096,0.16,25
+primary_progress,ElasticNet,planned_trl_gain,Planned TRL gain,0.9627357474536908,0.032573969742097385,0.896321453992333,1.0,0.0,25
+primary_progress,ElasticNet,taxonomy_level,Taxonomy level,0.03209367833753214,0.027092687709288993,0.0,0.0850886101637046,0.08,25
+primary_progress,ElasticNet,taxonomy_rarity,Taxonomy rarity,0.003155106725981861,0.007581702028655479,0.0,0.02490321835046754,0.24,25
+primary_progress,ElasticNet,other_organization_count,Other organizations,6.12465790570613e-06,3.062328952853065e-05,0.0,6.124657905706108e-05,0.2,25
 primary_progress,RandomForest,initial_trl,Initial TRL,0.004434485972737617,0.004909654848088752,0.0,0.012721522986610317,0.44,25
 primary_progress,RandomForest,planned_duration_months,Planned duration,0.04961498307397549,0.03343619762090952,0.0,0.11590435989456127,0.08,25
 primary_progress,RandomForest,planned_trl_gain,Planned TRL gain,0.798965826038218,0.06423828451266238,0.6920370736827502,0.880806562375092,0.0,25
@@ -23,12 +23,12 @@ primary_progress,HistGradientBoosting,planned_trl_gain,Planned TRL gain,0.745942
 primary_progress,HistGradientBoosting,taxonomy_level,Taxonomy level,0.05484210251907176,0.020951083026804176,0.018109831746346672,0.09220642587069303,0.0,25
 primary_progress,HistGradientBoosting,taxonomy_rarity,Taxonomy rarity,0.10110336214613572,0.047120730565698946,0.008323936639545833,0.16717837454269904,0.04,25
 primary_progress,HistGradientBoosting,other_organization_count,Other organizations,0.010349100744759684,0.013023850582363801,0.0,0.03583585485393674,0.44,25
-secondary_goal_attainment,ElasticNet,initial_trl,Initial TRL,0.07193060633070593,0.0831027570721575,0.0,0.16666666666666666,0.12,25
-secondary_goal_attainment,ElasticNet,planned_duration_months,Planned duration,0.08087511907983372,0.08634397330557855,0.0,0.18228883776668278,0.0,25
-secondary_goal_attainment,ElasticNet,planned_trl_gain,Planned TRL gain,0.06753052204384499,0.08272315687740919,0.0,0.16666666666666666,0.16,25
-secondary_goal_attainment,ElasticNet,taxonomy_level,Taxonomy level,0.646330419212282,0.405893497028793,0.16666666666666666,1.0,0.04,25
-secondary_goal_attainment,ElasticNet,taxonomy_rarity,Taxonomy rarity,0.06666666666666667,0.08333333333333333,0.0,0.16666666666666666,0.28,25
-secondary_goal_attainment,ElasticNet,other_organization_count,Other organizations,0.06666666666666667,0.08333333333333333,0.0,0.16666666666666666,0.04,25
+secondary_goal_attainment,ElasticNet,initial_trl,Initial TRL,0.0985972729973726,0.08245491086486349,0.0,0.16666666666666666,0.12,25
+secondary_goal_attainment,ElasticNet,planned_duration_months,Planned duration,0.10754178574650038,0.08277142287034502,0.0,0.18228883776668278,0.0,25
+secondary_goal_attainment,ElasticNet,planned_trl_gain,Planned TRL gain,0.0940060506222569,0.08372656211673288,0.0,0.16666666666666666,0.16,25
+secondary_goal_attainment,ElasticNet,taxonomy_level,Taxonomy level,0.5131882239672034,0.40486595705589107,0.16666666666666666,1.0,0.04,25
+secondary_goal_attainment,ElasticNet,taxonomy_rarity,Taxonomy rarity,0.09333333333333332,0.08443713418650368,0.0,0.16666666666666666,0.24,25
+secondary_goal_attainment,ElasticNet,other_organization_count,Other organizations,0.09333333333333332,0.08443713418650368,0.0,0.16666666666666666,0.04,25
 secondary_goal_attainment,RandomForest,initial_trl,Initial TRL,0.02523184048223879,0.07866446521541338,0.0,0.1977010481285577,0.44,25
 secondary_goal_attainment,RandomForest,planned_duration_months,Planned duration,0.2107843890959489,0.07770886045643505,0.05893313350352866,0.3282254595173924,0.04,25
 secondary_goal_attainment,RandomForest,planned_trl_gain,Planned TRL gain,0.008940797068250808,0.015637171485668004,0.0,0.0536277241737879,0.48,25

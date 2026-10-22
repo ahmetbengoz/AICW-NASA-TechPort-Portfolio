@@ -99,6 +99,10 @@ outputs/full_results.zip
 
 # Regenerated binary artefacts; scalable SVG figures remain versioned
 figures/*.png
+outputs/complete_results.zip
+outputs/validation_extension/outer_predictions.csv
+outputs/validation_extension/split_membership.csv
+manuscript/revised_source.md
 submission_package/AICW_IJADS_Submit_Ready_Package_v2.zip
 
 # Private submission correspondence and author-identifying metadata

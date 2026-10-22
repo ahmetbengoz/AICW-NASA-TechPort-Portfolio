@@ -1,14 +1,36 @@
-# Zenodo v2 release plan
+# Version 3 archival release plan
 
-1. Freeze and merge the reviewed `v2.0.0` repository state.
-2. Create the GitHub release `v2.0.0` with the title **Leakage-aware comparative learning and MCDM revision**.
-3. Confirm that the existing GitHub-Zenodo integration creates a new version under concept DOI `10.5281/zenodo.18913421` rather than replacing record `10.5281/zenodo.18913422`.
-4. Verify that the Zenodo archive contains `scripts/run_analysis.py`, the frozen raw snapshot, `data_dictionary.csv`, pinned dependencies, all generated outputs, all final figures and `run_manifest.json`.
-5. Use version `2.0.0`, software as the resource type, MIT as the code licence, and the two manuscript authors as creators.
-6. Describe v1.0 as superseded for manuscript reproduction while retaining it for provenance.
-7. Insert the newly minted version DOI into the unblinded title page, cover letter and post-review data-availability statement.
-8. Download the Zenodo ZIP, verify its checksum and run the analysis once from the extracted archive before final journal submission.
+Proposed tag: `v3.0.0`
 
-## Proposed description
+Proposed title: `v3.0.0 — Nested shortlist validation and structural baseline audit`
 
-This release contains the frozen NASA TechPort snapshot, leakage-aware repeated-cross-validation pipeline, held-out permutation proxy weights, corrected WASPAS and MARCOS analyses, robustness outputs and publication figures for the manuscript “Learning outcome-conditioned criterion importance for technology portfolio screening”. Version 2.0 supersedes the v1.0 analytical results but preserves the earlier record for provenance.
+Target the merged revision commit, not the old v2 commit. Confirm successful
+`reproduce-analysis` CI before creating a release. This file is a plan; it does
+not assert that a GitHub release or new Zenodo version already exists.
+
+## Public release description
+
+Version 3.0.0 provides the frozen NASA TechPort batch, complete descriptive and
+nested validation code, structural ablations, independent shortlist outcomes,
+training-only transformations, label-randomisation controls and seven figure
+sources for “Auditing learned criterion weights in technology portfolio
+screening”. It shows why predictive importance and locally stable weights do
+not establish improved screening. The study is retrospective and does not infer
+stakeholder utility, causal effects or NASA policy.
+
+Changes include nested importance extraction, gain-only and gain-deletion
+baselines, conventional comparator profiles, direct-prediction ranking,
+fractional cutoff ties, random/programme/start-date transport, strict image
+exports and invariant tests. Earlier analyses are retained in history.
+
+## Archive checks
+
+1. Use the existing concept DOI `10.5281/zenodo.18913421`; do not replace its older versions.
+2. Run `python scripts/reproduce_all.py` on the released source. Retain `outputs/revision_manifest.json`.
+3. The GitHub source archive contains the scientific source, compact results and SVGs. Large CSVs and PNGs are regenerated. Do not claim they are all loose files in the source archive.
+4. If adding generated assets to Zenodo, attach `outputs/complete_results.zip` and the seven verified figures, not the private journal-submission package.
+5. Use software, version 3.0.0, MIT for code, English, and the two creators in `CITATION.cff`.
+6. Insert a new version DOI only after Zenodo returns it and its contents have been checked. Until then cite the exact repository commit.
+
+Never publish cover letters, author-contact title pages, Turkish internal audit
+documents or the complete private submission ZIP as release assets.
