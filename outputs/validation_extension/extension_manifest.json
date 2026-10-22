@@ -1,0 +1,27 @@
+{
+  "seed": 20260811,
+  "random_outer_folds": 25,
+  "programme_outer_folds": 5,
+  "chronological_cutoff": "2021-10-01",
+  "inner_folds": 3,
+  "inner_permutations": 10,
+  "label_permutations": 100,
+  "selection_fraction_primary": 0.2,
+  "tie_rule": "fractional allocation at boundary",
+  "rarity": "training-only reciprocal category count; unseen=1",
+  "versions": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3"
+  },
+  "outputs": {
+    "ablation_repeat_metrics.csv": "b3c59fff4e264bd55d8d7ec9b98d3f0dfcc47c364a93feccf7812caaab322d1f",
+    "ablation_summary.csv": "c0f6a7a686ed0117082c757b97c2a3d3f2391e086f9ad96f4e3247b3238a2ba7",
+    "label_permutation.csv": "d0b30ca33745b5d7c3b50604abc1ee5072344ad4ba6cb1a8cc991c9f2f5843cf",
+    "label_permutation_summary.csv": "a630ec58670262668c6e4c2352499d6d83d9c3dc1f5ada9b257434445a37c566",
+    "nested_proxy_weights.csv": "4b73f6f65aeaa4ef16895ca311f7f1f7680d9beb58ba02aacbf74bb43afe5a7a",
+    "outer_predictions.csv": "3cd2f306b28b51d3eca9f9f7074d40606618f6fcaed611c1d71ba2c7086e03a1",
+    "shortlist_fold_results.csv": "079955462f0ac2eeed0d0624ae5c67c43d42b618fa19a16a0de57c518e734831",
+    "shortlist_summary.csv": "376650a0f5eab4a4ef0623bca27aa8c14a91b337b7771df730131d7a4a30b0d1",
+    "split_membership.csv": "a40c327481298cbbecb793026f03244e4f698b140e47644ebc792f163b24fed3"
+  }
+}

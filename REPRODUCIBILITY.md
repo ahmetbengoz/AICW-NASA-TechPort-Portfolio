@@ -1,5 +1,30 @@
 # Reproducibility and forensic audit
 
+## Version 3 entry point
+
+Run `python scripts/reproduce_all.py` for the current article. This invokes both
+the descriptive component and the nested extension, runs tests and creates
+`outputs/revision_manifest.json` and `outputs/complete_results.zip`.
+
+The v2 entry point and audit below are preserved for provenance, but
+`run_analysis.py` alone does not reproduce the v3 shortlist evidence. Current
+article source and reference metadata are in `manuscript/`. The curated
+manuscript is not automatically rewritten when numerical outputs are regenerated.
+
+Nested weights use three inner training-pool folds per outer split. Outer
+candidate outcomes never enter weight learning. Taxonomy counts and scales are
+training-only; boundary ties use fractional allocation. Strict start-date
+transport uses 1 October 2021 without splitting tied dates, but does not prove
+historical field or outcome availability. Test-fold variability is descriptive.
+
+The baseline raw snapshot hash is unchanged:
+`904795730b4dd9df8a5d7e804729835ef852c646dae85fe85e66aab79e983d90`.
+
+All PNGs are strict opaque exports with atomic file replacement. The previous
+truncated-image-tolerance setting has been removed. SVG metadata are fixed for
+deterministic re-exports. A source-only release does not contain all generated
+large files until the pipeline has been run.
+
 ## Legacy audit decision: REVISION REQUIRED
 
 The v1.0 archive preserved the historical analysis, but it was not internally submission-ready. The revised pipeline corrects the following material discrepancies.

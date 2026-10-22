@@ -1,11 +1,13 @@
-Figure 1. Leakage-aware learning and MCDM propagation workflow. Predictive reliance, value direction and final ranking are treated as separate analytical layers.
+Figure 1. Separate descriptive and independent shortlist evaluation layers. Outer candidate outcomes enter evaluation only, after all scoring rules are frozen.
 
-Figure 2. Repeated out-of-fold predictive performance by outcome and learner. Points show mean R-squared; bars show 95% t intervals over five complete out-of-fold repetitions.
+Figure 2. Primary raw-progress predictive performance under descriptive repeated cross-validation. Bars show means; error bars show t-based partition-variability intervals across five complete out-of-fold repetitions, not population confidence intervals.
 
-Figure 3. Primary-outcome proxy-importance profiles derived from held-out permutation importance. Bars show means across 25 outer folds; error bars show empirical 2.5th and 97.5th percentiles.
+Figure 3. Descriptive primary-outcome proxy weights. Bars show means across 25 held-out folds; error bars show empirical 2.5th and 97.5th percentiles. These are resampling ranges, not inferential confidence limits.
 
-Figure 4. Pairwise learner agreement in primary proxy-weight order and downstream WASPAS project ranks. Ranking agreement remains high despite visible differences among weak-feature weights.
+Figure 4. Descriptive learner agreement in primary criterion-weight order and downstream WASPAS ranks. EN Elastic Net; RF Random Forest; ET Extra Trees; HGB histogram gradient boosting.
 
-Figure 5. Random-Forest leakage diagnostic for raw TRL progress. Bars show mean repeated out-of-fold R-squared; points show individual repetitions.
+Figure 5. Random Forest current-state leakage diagnostic. Bars show mean repeated out-of-fold R² and MAE; error bars show standard deviations across five repetitions. The three specifications contain different information and are not a causal comparison of leakage effects.
 
-Figure 6. Rank stability under 5,000 independent bounded weight perturbations around the primary cross-learner median profile.
+Figure 6. Local rank stability across 5,000 simultaneous bounded ±20% perturbations of the primary cross-learner median profile. This does not test robustness to outcome construction or independent shortlist value.
+
+Figure 7. Nested top-20% shortlist outcome lift. Points are cohort means across 25 random folds, five programme-separated folds or one chronological cohort. They are descriptive comparisons, not independent-sample confidence estimates.

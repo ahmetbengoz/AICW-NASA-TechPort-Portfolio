@@ -1,5 +1,20 @@
 # Changelog
 
+## v3.0.0 - independent shortlist and structural-baseline audit
+
+- Reframed the contribution as a retrospective empirical audit, not a new weighting algorithm.
+- Added nested training-only importance extraction and independent candidate-cohort shortlists.
+- Added gain-only and headroom linear baselines, gain-deletion ablation, direct prediction and conventional weighting comparators.
+- Re-estimated category rarity and criterion scales within the relevant training sets.
+- Evaluated 10%, 20% and 30% shortlists with fractional boundary ties across random, programme and strictly start-date-separated splits.
+- Added 100 label-randomisation controls per outcome and explicit noncausal interpretation.
+- Moved standardisation inside Elastic Net inner validation; updated affected results.
+- Explained the fixed-universe MARCOS/weighted-additive rank equivalence.
+- Removed truncated-PNG tolerance and introduced strict atomic opaque image exports.
+- Added invariant tests, deterministic SVG metadata and a complete v3 reproduction entry point.
+- Verified and corrected reference metadata; added relevant 2025–2026 work without claiming the first general importance-audit protocol.
+- No new Zenodo version DOI is claimed until a release has actually been archived.
+
 ## v2.0.0 - leakage-aware comparative revision
 
 - Repositioned the study from a new-AI-method claim to an outcome-conditioned proxy-importance benchmarking protocol.

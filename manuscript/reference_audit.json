@@ -1,0 +1,2059 @@
+{
+  "cinelli2020": {
+    "doi": "10.1016/j.omega.2020.102261",
+    "title": [
+      "How to support the application of multiple criteria decision analysis? Let us start with a comprehensive taxonomy"
+    ],
+    "authors": [
+      {
+        "given": "Marco",
+        "family": "Cinelli",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Miłosz",
+        "family": "Kadziński",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Michael",
+        "family": "Gonzalez",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Roman",
+        "family": "Słowiński",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Omega"
+    ],
+    "volume": "96",
+    "issue": null,
+    "page": "102261",
+    "article_number": "102261",
+    "published": {
+      "date-parts": [
+        [
+          2020,
+          10
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2020,
+          10
+        ]
+      ]
+    },
+    "published_online": null,
+    "url": "https://doi.org/10.1016/j.omega.2020.102261",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "greco2025": {
+    "doi": "10.1016/j.ejor.2024.07.038",
+    "title": [
+      "Fifty years of multiple criteria decision analysis: From classical methods to robust ordinal regression"
+    ],
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0000-0001-8293-8227",
+        "authenticated-orcid": false,
+        "given": "Salvatore",
+        "family": "Greco",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-5200-7795",
+        "authenticated-orcid": false,
+        "given": "Roman",
+        "family": "Słowiński",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Jyrki",
+        "family": "Wallenius",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "European Journal of Operational Research"
+    ],
+    "volume": "323",
+    "issue": "2",
+    "page": "351-377",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          2025,
+          6
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2025,
+          6
+        ]
+      ]
+    },
+    "published_online": null,
+    "url": "https://doi.org/10.1016/j.ejor.2024.07.038",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "fu2021": {
+    "doi": "10.1016/j.asoc.2021.107622",
+    "title": [
+      "Data-driven decision making based on evidential reasoning approach and machine learning algorithms"
+    ],
+    "authors": [
+      {
+        "given": "Chao",
+        "family": "Fu",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Che",
+        "family": "Xu",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Min",
+        "family": "Xue",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Weiyong",
+        "family": "Liu",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Shanlin",
+        "family": "Yang",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Applied Soft Computing"
+    ],
+    "volume": "110",
+    "issue": null,
+    "page": "107622",
+    "article_number": "107622",
+    "published": {
+      "date-parts": [
+        [
+          2021,
+          10
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2021,
+          10
+        ]
+      ]
+    },
+    "published_online": null,
+    "url": "https://doi.org/10.1016/j.asoc.2021.107622",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "maghsoodi2023": {
+    "doi": "10.1016/j.engappai.2022.105785",
+    "title": [
+      "A machine learning driven multiple criteria decision analysis using LS-SVM feature elimination: Sustainability performance assessment with incomplete data"
+    ],
+    "authors": [
+      {
+        "given": "Abtin",
+        "family": "Ijadi Maghsoodi",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-1012-4213",
+        "authenticated-orcid": false,
+        "given": "Ali Ebadi",
+        "family": "Torkayesh",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0003-3385-6561",
+        "authenticated-orcid": false,
+        "given": "Lincoln C.",
+        "family": "Wood",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Enrique",
+        "family": "Herrera-Viedma",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Kannan",
+        "family": "Govindan",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Engineering Applications of Artificial Intelligence"
+    ],
+    "volume": "119",
+    "issue": null,
+    "page": "105785",
+    "article_number": "105785",
+    "published": {
+      "date-parts": [
+        [
+          2023,
+          3
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2023,
+          3
+        ]
+      ]
+    },
+    "published_online": null,
+    "url": "https://doi.org/10.1016/j.engappai.2022.105785",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "zindani2025": {
+    "doi": "10.1186/s44147-025-00789-4",
+    "title": [
+      "Leveraging random forest regression for informed and risk-aware material selection in supercapacitor fabrication"
+    ],
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0000-0002-9941-593X",
+        "authenticated-orcid": false,
+        "given": "Divya",
+        "family": "Zindani",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Sweta",
+        "family": "Singh",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Journal of Engineering and Applied Science"
+    ],
+    "volume": "72",
+    "issue": "1",
+    "page": null,
+    "article_number": "223",
+    "published": {
+      "date-parts": [
+        [
+          2025,
+          11,
+          26
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2025,
+          12
+        ]
+      ]
+    },
+    "published_online": {
+      "date-parts": [
+        [
+          2025,
+          11,
+          26
+        ]
+      ]
+    },
+    "url": "https://doi.org/10.1186/s44147-025-00789-4",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "wang2026": {
+    "doi": "10.3390/a19090762",
+    "title": [
+      "A Machine Learning Approach to Multi-Criteria Decision-Making via Peer-Prediction Trees and Excess Performance Evaluation"
+    ],
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0000-0001-7867-7626",
+        "authenticated-orcid": false,
+        "given": "Zhiyuan",
+        "family": "Wang",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "School of Business, Singapore University of Social Sciences, Singapore 599494, Singapore"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          },
+          {
+            "role": "conceptualization",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "methodology",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "software",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "formal-analysis",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "investigation",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "data-curation",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "writing-original-draft",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "visualization",
+            "vocabulary": "credit"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-2645-5383",
+        "authenticated-orcid": false,
+        "given": "Tristan",
+        "family": "Lim",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "SUSS Academy, Singapore University of Social Sciences, Singapore 599494, Singapore"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          },
+          {
+            "role": "conceptualization",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "methodology",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "validation",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "formal-analysis",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "investigation",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "writing-original-draft",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "visualization",
+            "vocabulary": "credit"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-6195-667X",
+        "authenticated-orcid": false,
+        "given": "Mahmut",
+        "family": "Baydaş",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Faculty of Applied Sciences, Necmettin Erbakan University, Konya 42010, Türkiye"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          },
+          {
+            "role": "formal-analysis",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "investigation",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "data-curation",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "writing-review-editing",
+            "vocabulary": "credit"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0003-4452-5768",
+        "authenticated-orcid": false,
+        "given": "Željko",
+        "family": "Stević",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Faculty of Transport and Traffic Engineering, University of East Sarajevo, 74000 Doboj, Bosnia and Herzegovina"
+          },
+          {
+            "name": "Graduate School of Energy & Environment (KU-KIST GREEN SCHOOL), Korea University, Seoul 02841, Republic of Korea"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          },
+          {
+            "role": "formal-analysis",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "investigation",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "data-curation",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "writing-review-editing",
+            "vocabulary": "credit"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0009-0009-7461-1983",
+        "authenticated-orcid": false,
+        "given": "Yinghui",
+        "family": "Yu",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "School of Business, Singapore University of Social Sciences, Singapore 599494, Singapore"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          },
+          {
+            "role": "conceptualization",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "formal-analysis",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "investigation",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "writing-review-editing",
+            "vocabulary": "credit"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0009-0009-1497-0124",
+        "authenticated-orcid": false,
+        "given": "Vanessa",
+        "family": "Liu",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "School of Business, Singapore University of Social Sciences, Singapore 599494, Singapore"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          },
+          {
+            "role": "conceptualization",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "formal-analysis",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "investigation",
+            "vocabulary": "credit"
+          },
+          {
+            "role": "writing-review-editing",
+            "vocabulary": "credit"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Algorithms"
+    ],
+    "volume": "19",
+    "issue": "9",
+    "page": "762",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          2026,
+          9,
+          5
+        ]
+      ]
+    },
+    "published_print": null,
+    "published_online": {
+      "date-parts": [
+        [
+          2026,
+          9,
+          5
+        ]
+      ]
+    },
+    "url": "https://doi.org/10.3390/a19090762",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "upadhyay2026": {
+    "doi": "10.1016/j.mex.2026.104007",
+    "title": [
+      "Machine learning assisted multi-criteria decision-making approaches for site selection: A systematic review"
+    ],
+    "authors": [
+      {
+        "given": "Disha",
+        "family": "Upadhyay",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Anuj",
+        "family": "Kumar",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Sangeeta",
+        "family": "Pant",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Ketan",
+        "family": "Kotecha",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Ajith",
+        "family": "Abraham",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "MethodsX"
+    ],
+    "volume": "17",
+    "issue": null,
+    "page": "104007",
+    "article_number": "104007",
+    "published": {
+      "date-parts": [
+        [
+          2026,
+          12
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2026,
+          12
+        ]
+      ]
+    },
+    "published_online": null,
+    "url": "https://doi.org/10.1016/j.mex.2026.104007",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "hooker2021": {
+    "doi": "10.1007/s11222-021-10057-z",
+    "title": [
+      "Unrestricted permutation forces extrapolation: variable importance requires at least one more model, or there is no free variable importance"
+    ],
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0000-0003-2648-1167",
+        "authenticated-orcid": false,
+        "given": "Giles",
+        "family": "Hooker",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Lucas",
+        "family": "Mentch",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Siyu",
+        "family": "Zhou",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Statistics and Computing"
+    ],
+    "volume": "31",
+    "issue": "6",
+    "page": null,
+    "article_number": "82",
+    "published": {
+      "date-parts": [
+        [
+          2021,
+          10,
+          29
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2021,
+          11
+        ]
+      ]
+    },
+    "published_online": {
+      "date-parts": [
+        [
+          2021,
+          10,
+          29
+        ]
+      ]
+    },
+    "url": "https://doi.org/10.1007/s11222-021-10057-z",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "critic1995": {
+    "doi": "10.1016/0305-0548(94)00059-H",
+    "title": [
+      "Determining objective weights in multiple criteria problems: The critic method"
+    ],
+    "authors": [
+      {
+        "given": "D.",
+        "family": "Diakoulaki",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "G.",
+        "family": "Mavrotas",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "L.",
+        "family": "Papayannakis",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Computers &amp; Operations Research"
+    ],
+    "volume": "22",
+    "issue": "7",
+    "page": "763-770",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          1995,
+          8
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          1995,
+          8
+        ]
+      ]
+    },
+    "published_online": null,
+    "url": "https://doi.org/10.1016/0305-0548(94)00059-h",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "merec2021": {
+    "doi": "10.3390/sym13040525",
+    "title": [
+      "Determination of Objective Weights Using a New Method Based on the Removal Effects of Criteria (MEREC)"
+    ],
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0000-0002-0362-1633",
+        "authenticated-orcid": false,
+        "given": "Mehdi",
+        "family": "Keshavarz-Ghorabaee",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Department of Management, Faculty of Humanities (Azadshahr Branch), Gonbad Kavous University, Gonbad Kavous 49717-99151, Iran"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Maghsoud",
+        "family": "Amiri",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Industrial Management, Faculty of Management and Accounting, Allameh Tabataba’i University, Tehran 14348-63111, Iran"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Edmundas Kazimieras",
+        "family": "Zavadskas",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Institute of Sustainable Construction, Civil Engineering Faculty, Vilnius Gediminas Technical University, Sauletekio al. 11, LT-10223 Vilnius, Lithuania"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-5835-9388",
+        "authenticated-orcid": false,
+        "given": "Zenonas",
+        "family": "Turskis",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Institute of Sustainable Construction, Civil Engineering Faculty, Vilnius Gediminas Technical University, Sauletekio al. 11, LT-10223 Vilnius, Lithuania"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-1734-3216",
+        "authenticated-orcid": false,
+        "given": "Jurgita",
+        "family": "Antucheviciene",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Construction Management and Real Estate, Vilnius Gediminas Technical University, Sauletekio al. 11, LT-10223 Vilnius, Lithuania"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Symmetry"
+    ],
+    "volume": "13",
+    "issue": "4",
+    "page": "525",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          2021,
+          3,
+          24
+        ]
+      ]
+    },
+    "published_print": null,
+    "published_online": {
+      "date-parts": [
+        [
+          2021,
+          3,
+          24
+        ]
+      ]
+    },
+    "url": "https://doi.org/10.3390/sym13040525",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "fucom2018": {
+    "doi": "10.3390/sym10090393",
+    "title": [
+      "A New Model for Determining Weight Coefficients of Criteria in MCDM Models: Full Consistency Method (FUCOM)"
+    ],
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0000-0001-8522-1942",
+        "authenticated-orcid": false,
+        "given": "Dragan",
+        "family": "Pamučar",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Department of Logistics, Military academy, University of Defence in Belgrade, Pavla Jurisica Sturma 33, 11000 Belgrade, Serbia"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0003-4452-5768",
+        "authenticated-orcid": false,
+        "given": "Željko",
+        "family": "Stević",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Faculty of Transport and Traffic Engineering Doboj, University of East Sarajevo, Vojvode Mišića 52, 74000 Doboj, Bosnia and Herzegovina"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-3641-5107",
+        "authenticated-orcid": false,
+        "given": "Siniša",
+        "family": "Sremac",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Faculty of Technical Sciences, University of Novi Sad, Trg Dositeja Obradovica 6, 21000 Novi Sad, Serbia"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Symmetry"
+    ],
+    "volume": "10",
+    "issue": "9",
+    "page": "393",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          2018,
+          9,
+          10
+        ]
+      ]
+    },
+    "published_print": null,
+    "published_online": {
+      "date-parts": [
+        [
+          2018,
+          9,
+          10
+        ]
+      ]
+    },
+    "url": "https://doi.org/10.3390/sym10090393",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "tervonen2013": {
+    "doi": "10.1016/j.ejor.2012.08.026",
+    "title": [
+      "Hit-And-Run enables efficient weight generation for simulation-based multiple criteria decision analysis"
+    ],
+    "authors": [
+      {
+        "given": "Tommi",
+        "family": "Tervonen",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Gert",
+        "family": "van Valkenhoef",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Nalan",
+        "family": "Baştürk",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Douwe",
+        "family": "Postmus",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "European Journal of Operational Research"
+    ],
+    "volume": "224",
+    "issue": "3",
+    "page": "552-559",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          2013,
+          2
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2013,
+          2
+        ]
+      ]
+    },
+    "published_online": null,
+    "url": "https://doi.org/10.1016/j.ejor.2012.08.026",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "corrente2017": {
+    "doi": "10.1016/j.omega.2016.11.008",
+    "title": [
+      "A robust ranking method extending ELECTRE III to hierarchy of interacting criteria, imprecise weights and stochastic analysis"
+    ],
+    "authors": [
+      {
+        "given": "Salvatore",
+        "family": "Corrente",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "José Rui",
+        "family": "Figueira",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Salvatore",
+        "family": "Greco",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Roman",
+        "family": "Słowiński",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Omega"
+    ],
+    "volume": "73",
+    "issue": null,
+    "page": "1-17",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          2017,
+          12
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2017,
+          12
+        ]
+      ]
+    },
+    "published_online": null,
+    "url": "https://doi.org/10.1016/j.omega.2016.11.008",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "breiman2001": {
+    "doi": "10.1023/A:1010933404324",
+    "title": [
+      "Random Forests"
+    ],
+    "authors": [
+      {
+        "given": "Leo",
+        "family": "Breiman",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Machine Learning"
+    ],
+    "volume": "45",
+    "issue": "1",
+    "page": "5-32",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          2001,
+          10
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2001,
+          10
+        ]
+      ]
+    },
+    "published_online": null,
+    "url": "https://doi.org/10.1023/a:1010933404324",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "zou2005": {
+    "doi": "10.1111/j.1467-9868.2005.00503.x",
+    "title": [
+      "Regularization and Variable Selection Via the Elastic Net"
+    ],
+    "authors": [
+      {
+        "given": "Hui",
+        "family": "Zou",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Stanford University , USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Trevor",
+        "family": "Hastie",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Stanford University , USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Journal of the Royal Statistical Society Series B: Statistical Methodology"
+    ],
+    "volume": "67",
+    "issue": "2",
+    "page": "301-320",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          2005,
+          3,
+          9
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2005,
+          4,
+          1
+        ]
+      ]
+    },
+    "published_online": {
+      "date-parts": [
+        [
+          2005,
+          3,
+          9
+        ]
+      ]
+    },
+    "url": "https://doi.org/10.1111/j.1467-9868.2005.00503.x",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "geurts2006": {
+    "doi": "10.1007/s10994-006-6226-1",
+    "title": [
+      "Extremely randomized trees"
+    ],
+    "authors": [
+      {
+        "given": "Pierre",
+        "family": "Geurts",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Damien",
+        "family": "Ernst",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Louis",
+        "family": "Wehenkel",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Machine Learning"
+    ],
+    "volume": "63",
+    "issue": "1",
+    "page": "3-42",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          2006,
+          3,
+          2
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2006,
+          4
+        ]
+      ]
+    },
+    "published_online": {
+      "date-parts": [
+        [
+          2006,
+          3,
+          2
+        ]
+      ]
+    },
+    "url": "https://doi.org/10.1007/s10994-006-6226-1",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "friedman2001": {
+    "doi": "10.1214/aos/1013203451",
+    "title": [
+      "Greedy function approximation: A gradient boosting machine."
+    ],
+    "authors": [
+      {
+        "given": "Jerome H.",
+        "family": "Friedman",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "The Annals of Statistics"
+    ],
+    "volume": "29",
+    "issue": "5",
+    "page": "1189-1232",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          2001,
+          10,
+          1
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2001,
+          10,
+          1
+        ]
+      ]
+    },
+    "published_online": null,
+    "url": "https://doi.org/10.1214/aos/1013203451",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "varma2006": {
+    "doi": "10.1186/1471-2105-7-91",
+    "title": [
+      "Bias in error estimation when using cross-validation for model selection"
+    ],
+    "authors": [
+      {
+        "given": "Sudhir",
+        "family": "Varma",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Richard",
+        "family": "Simon",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "BMC Bioinformatics"
+    ],
+    "volume": "7",
+    "issue": "1",
+    "page": null,
+    "article_number": "91",
+    "published": {
+      "date-parts": [
+        [
+          2006,
+          2,
+          23
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2006,
+          12
+        ]
+      ]
+    },
+    "published_online": {
+      "date-parts": [
+        [
+          2006,
+          2,
+          23
+        ]
+      ]
+    },
+    "url": "https://doi.org/10.1186/1471-2105-7-91",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "altmann2010": {
+    "doi": "10.1093/bioinformatics/btq134",
+    "title": [
+      "Permutation importance: a corrected feature importance measure"
+    ],
+    "authors": [
+      {
+        "given": "André",
+        "family": "Altmann",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Department of Computational Biology and Applied Algorithmics, Max Planck Institute for Informatics, Saarbrücken, Germany"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Laura",
+        "family": "Toloşi",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Computational Biology and Applied Algorithmics, Max Planck Institute for Informatics, Saarbrücken, Germany"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Oliver",
+        "family": "Sander",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Computational Biology and Applied Algorithmics, Max Planck Institute for Informatics, Saarbrücken, Germany"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Thomas",
+        "family": "Lengauer",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Computational Biology and Applied Algorithmics, Max Planck Institute for Informatics, Saarbrücken, Germany"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Bioinformatics"
+    ],
+    "volume": "26",
+    "issue": "10",
+    "page": "1340-1347",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          2010,
+          4,
+          12
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2010,
+          5,
+          15
+        ]
+      ]
+    },
+    "published_online": {
+      "date-parts": [
+        [
+          2010,
+          4,
+          12
+        ]
+      ]
+    },
+    "url": "https://doi.org/10.1093/bioinformatics/btq134",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "waspas2012": {
+    "doi": "10.5755/j01.eee.122.6.1810",
+    "title": [
+      "Optimization of Weighted Aggregated Sum Product Assessment",
+      "Svorinio agreguoto alternatyvių sprendimų vertinimo optimizavimas"
+    ],
+    "authors": [
+      {
+        "given": "E. K.",
+        "family": "Zavadskas",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Z.",
+        "family": "Turskis",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "J.",
+        "family": "Antucheviciene",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "A.",
+        "family": "Zakarevicius",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Elektronika ir Elektrotechnika"
+    ],
+    "volume": "122",
+    "issue": "6",
+    "page": "3-6",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          2012,
+          6,
+          7
+        ]
+      ]
+    },
+    "published_print": null,
+    "published_online": {
+      "date-parts": [
+        [
+          2012,
+          6,
+          7
+        ]
+      ]
+    },
+    "url": "https://doi.org/10.5755/j01.eee.122.6.1810",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "marcos2020": {
+    "doi": "10.1016/j.cie.2019.106231",
+    "title": [
+      "Sustainable supplier selection in healthcare industries using a new MCDM method: Measurement of alternatives and ranking according to COmpromise solution (MARCOS)"
+    ],
+    "authors": [
+      {
+        "given": "Željko",
+        "family": "Stević",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Dragan",
+        "family": "Pamučar",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Adis",
+        "family": "Puška",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Prasenjit",
+        "family": "Chatterjee",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Computers &amp; Industrial Engineering"
+    ],
+    "volume": "140",
+    "issue": null,
+    "page": "106231",
+    "article_number": "106231",
+    "published": {
+      "date-parts": [
+        [
+          2020,
+          2
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2020,
+          2
+        ]
+      ]
+    },
+    "published_online": null,
+    "url": "https://doi.org/10.1016/j.cie.2019.106231",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "shannon1948": {
+    "doi": "10.1002/j.1538-7305.1948.tb01338.x",
+    "title": [
+      "A Mathematical Theory of Communication"
+    ],
+    "authors": [
+      {
+        "given": "C. E.",
+        "family": "Shannon",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Bell System Technical Journal"
+    ],
+    "volume": "27",
+    "issue": "3",
+    "page": "379-423",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          1948,
+          7
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          1948,
+          7
+        ]
+      ]
+    },
+    "published_online": {
+      "date-parts": [
+        [
+          2013,
+          7,
+          29
+        ]
+      ]
+    },
+    "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  },
+  "kizielewicz2024": {
+    "doi": "10.1016/j.procs.2024.09.673",
+    "title": [
+      "Subjective weight determination methods in multi-criteria decision-making: a systematic review"
+    ],
+    "authors": [
+      {
+        "given": "Bartłomiej",
+        "family": "Kizielewicz",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Tomasz",
+        "family": "Tomczyk",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Michał",
+        "family": "Gandor",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Wojciech",
+        "family": "Sałabun",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "journal": [
+      "Procedia Computer Science"
+    ],
+    "volume": "246",
+    "issue": null,
+    "page": "5396-5407",
+    "article_number": null,
+    "published": {
+      "date-parts": [
+        [
+          2024
+        ]
+      ]
+    },
+    "published_print": {
+      "date-parts": [
+        [
+          2024
+        ]
+      ]
+    },
+    "published_online": null,
+    "url": "https://doi.org/10.1016/j.procs.2024.09.673",
+    "checked": "2026-10-22",
+    "status": "resolved"
+  }
+}

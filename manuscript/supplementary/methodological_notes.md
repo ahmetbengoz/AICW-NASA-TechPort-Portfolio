@@ -1,5 +1,12 @@
 # Methodological notes
 
+The sections below describe the retained descriptive component. The v3
+independent evaluation is documented in `validation_extension.md`; it uses
+training-only rarity and scales and learns weights inside the outer training
+pool. Outer-held-out descriptive weights must not be reused as if they were
+independently tested shortlisting policies. Repeat variability is conditional
+partition variation, not independent-sample inference.
+
 ## Interpretation
 
 The revised workflow estimates outcome-conditioned predictive-reliance profiles. A normalised held-out permutation profile is called a proxy weight because it can be propagated through an MCDM calculation, not because it is equivalent to a stakeholder preference, marginal utility, causal effect or universal criterion weight.
