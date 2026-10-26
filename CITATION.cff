@@ -1,9 +1,11 @@
 cff-version: 1.2.0
-message: "If you use these materials, cite the exact released version and its version-specific Zenodo DOI."
+message: "If you use these materials, cite version 3.0.1 using DOI 10.5281/zenodo.23668280."
 title: "Auditing learned criterion weights in technology portfolio screening"
 type: software
 version: 3.0.1
 date-released: 2026-10-26
+doi: "10.5281/zenodo.23668280"
+url: "https://doi.org/10.5281/zenodo.23668280"
 authors:
   - family-names: "Bengöz"
     given-names: "Ahmet"
