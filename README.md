@@ -93,9 +93,14 @@ package.
 
 ## Archival versions
 
+Patch version **3.0.1** removes an internal working document and updates citation
+metadata. The dataset, analytical code, numerical results and figures are
+unchanged from v3.0.0. Cite the version-specific DOI assigned by Zenodo after
+the v3.0.1 release is published; the DOI below identifies v3.0.0 only.
+
 Version **3.0.0** is archived on Zenodo:
 [10.5281/zenodo.23667988](https://doi.org/10.5281/zenodo.23667988).
-Use this version-specific DOI when citing the nested shortlist audit. The
+Use this DOI when citing the v3.0.0 archive. The
 [GitHub release v3.0.0](https://github.com/ahmetbengoz/AICW-NASA-TechPort-Portfolio/releases/tag/v3.0.0)
 freezes the scientific revision at commit
 `0bfe2a5383390add5f3ed58286bec4a8dae8812a`.
