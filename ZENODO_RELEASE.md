@@ -2,15 +2,21 @@
 
 ## Version 3.0.1 patch release
 
-Prepared tag: `v3.0.1`, targeting the current `main` branch.
+Published tag: `v3.0.1`, freezing commit
+`4e8bd4684990aae5a150f6076a4c68fd22919e2c` on 26 October 2026.
+
+Zenodo version DOI: [10.5281/zenodo.23668280](https://doi.org/10.5281/zenodo.23668280).
+
+GitHub release: [v3.0.1](https://github.com/ahmetbengoz/AICW-NASA-TechPort-Portfolio/releases/tag/v3.0.1).
 
 Release title: `v3.0.1 — Archival cleanup and citation metadata update`
 
 This maintenance release removes an internal working document from the source
 tree and updates release and citation metadata. The dataset, analytical code,
-numerical results and figures are unchanged from v3.0.0. Zenodo assigns a new
-version DOI after publication; `10.5281/zenodo.23667988` remains the DOI of
-v3.0.0 and must not be assigned to v3.0.1.
+numerical results and figures are unchanged from v3.0.0. Cite
+`10.5281/zenodo.23668280` for the cleaned archive; `10.5281/zenodo.23667988`
+continues to identify v3.0.0. Post-publication DOI updates on `main` do not
+change either immutable source release and do not require a new release.
 
 ## Published version 3.0.0
 
