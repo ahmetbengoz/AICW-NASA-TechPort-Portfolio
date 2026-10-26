@@ -1,5 +1,19 @@
 # Version 3 archival release
 
+## Version 3.0.1 patch release
+
+Prepared tag: `v3.0.1`, targeting the current `main` branch.
+
+Release title: `v3.0.1 — Archival cleanup and citation metadata update`
+
+This maintenance release removes an internal working document from the source
+tree and updates release and citation metadata. The dataset, analytical code,
+numerical results and figures are unchanged from v3.0.0. Zenodo assigns a new
+version DOI after publication; `10.5281/zenodo.23667988` remains the DOI of
+v3.0.0 and must not be assigned to v3.0.1.
+
+## Published version 3.0.0
+
 Published tag: `v3.0.0`
 
 Release title: `v3.0.0 — Nested shortlist validation and structural baseline audit`
