@@ -78,8 +78,9 @@ their fields frozen at a historical decision date.
 
 Large detailed predictions, split memberships and raster figures are generated
 by the entry point rather than all stored as loose Git objects. Compact
-scientific results and SVG sources are versioned. Private submission letters,
-author-contact files and internal assessments are not part of public releases.
+scientific results and SVG sources are versioned. Private submission letters
+and author-contact files are excluded from the separate manuscript replication
+package.
 
 ## Interpretation boundaries
 
@@ -92,13 +93,20 @@ author-contact files and internal assessments are not part of public releases.
 
 ## Archival versions
 
-The existing Zenodo concept is
-[10.5281/zenodo.18913421](https://doi.org/10.5281/zenodo.18913421).
+Version **3.0.0** is archived on Zenodo:
+[10.5281/zenodo.23667988](https://doi.org/10.5281/zenodo.23667988).
+Use this version-specific DOI when citing the nested shortlist audit. The
+[GitHub release v3.0.0](https://github.com/ahmetbengoz/AICW-NASA-TechPort-Portfolio/releases/tag/v3.0.0)
+freezes the scientific revision at commit
+`0bfe2a5383390add5f3ed58286bec4a8dae8812a`.
+
 The original version
 [10.5281/zenodo.18913422](https://doi.org/10.5281/zenodo.18913422)
-and the v2 history do not contain this nested audit. Cite the exact v3 repository
-commit until a new versioned archive is actually minted. No new DOI is guessed
-or claimed. See [ZENODO_RELEASE.md](ZENODO_RELEASE.md).
+and version 2
+[10.5281/zenodo.21894218](https://doi.org/10.5281/zenodo.21894218)
+preserve earlier analyses and do not contain the nested audit. Later documentation
+updates on `main` do not change the frozen v3.0.0 archive. See
+[ZENODO_RELEASE.md](ZENODO_RELEASE.md).
 
 Code is MIT-licensed. NASA source records retain their source terms. NASA did not
 participate in the study and the rankings are not NASA recommendations.
